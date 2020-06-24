@@ -49,24 +49,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //   )
 
   [_WORKMAN] = LAYOUT_ortho_4x12_bocaj(
-    KC_ESC,  _______________WORKMAN_LHS_1_______________,  _______________WORKMAN_RHS_1_______________,   KC_BSLS,
-    KC_TAB,  _______________WORKMAN_LHS_2_______________,  _______________WORKMAN_RHS_2_______________,   KC_QUOT,
-    KC_LSFT, _______________WORKMAN_LHS_3_______________,  _______________WORKMAN_RHS_3_______________,   XXXXXXX,
-    KC_LEAD, KC_LBRC, KC_UP, KC_LEFT, KC_BSPACE, KC_SPACE, XXXXXXX, KC_ENTER, KC_RIGHT, KC_DOWN, KC_RBRC, MO_MSE
+    KC_ESC,  _______________WORKMAN_LHS_1_______________,  _______________WORKMAN_RHS_1_______________,  KC_BSLS,
+    KC_TAB,  _______________WORKMAN_LHS_2_______________,  _______________WORKMAN_RHS_2_______________,  KC_QUOT,
+    KC_LSFT, _______________WORKMAN_LHS_3_______________,  _______________WORKMAN_RHS_3_______________,  KC_LEAD,
+    MO_MSE, KC_LBRC, KC_UP, KC_LEFT, KC_BSPACE, KC_SPACE, XXXXXXX, KC_ENTER, KC_RIGHT, KC_DOWN, KC_RBRC, XXXXXXX
   ),
 
   [_QWERTY] = LAYOUT_ortho_4x12_bocaj(
     KC_ESC,  ________________QWERTY_LHS1________________,  ________________QWERTY_RHS1________________,   KC_BSLS,
     KC_TAB,  ________________QWERTY_LHS2________________,  ________________QWERTY_RHS2________________,   KC_QUOT,
-    KC_LSFT, ________________QWERTY_LHS3________________,  ________________QWERTY_RHS3________________,   XXXXXXX,
-    KC_LEAD, KC_LBRC, KC_UP, KC_LEFT, KC_BSPACE,KC_SPACE,  XXXXXXX, KC_ENTER, KC_RIGHT, KC_DOWN, KC_RBRC, MO_MSE
+    KC_LSFT, ________________QWERTY_LHS3________________,  ________________QWERTY_RHS3________________,   KC_LEAD,
+    MO_MSE, KC_LBRC, KC_UP, KC_LEFT, KC_BSPACE,KC_SPACE,  XXXXXXX, KC_ENTER, KC_RIGHT, KC_DOWN, KC_RBRC, XXXXXXX
   ),
 
   [_LOWER] = LAYOUT_ortho_4x12_bocaj(
      KC_GRAVE, _______, _______, KC_UP,  XXXXXXX,   MC_ARRW,  KC_MINS, KC_7, KC_8,    KC_9,    KC_PSLS, KC_EQUAL,
      KC_DEL, _______, KC_LEFT, KC_DOWN,  KC_RIGHT,  KC_LPRN,  KC_RPRN, KC_4, KC_5,    KC_6,    KC_PAST, KC_ENTER,
      _______, _______, XXXXXXX, XXXXXXX, XXXXXXX,   KC_LBRC,  KC_RBRC, KC_1, KC_2,    KC_3,    KC_PPLS, _______,
-     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPACE, KC_SPACE, XXXXXXX, KC_0, KC_PDOT, KC_COMM, KC_MINS, XXXXXXX
+     _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPACE, KC_SPACE, XXXXXXX, KC_0, KC_PDOT, KC_COMM, KC_MINS, XXXXXXX
   ),
 
   [_MOUSE] = LAYOUT_planck_grid(
