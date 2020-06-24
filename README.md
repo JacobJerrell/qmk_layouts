@@ -4,7 +4,7 @@ Simplifies navigating the qmk structure to be more efficient.
 
 ## Git Usage & Compiling
 
-The workspace can be used with Git or changes easily applied to the main qmk_firmware directory and runs the `qmk` command with the provided parameters. Furthermore, paths can easily be added to the workspace. This is all made possible with this bash function in my `.zshrc` file:
+The workspace can be used with Git commands/parameters OR changes are copied to the main qmk_firmware directory and runs the `qmk` command with the provided parameters. Furthermore, paths can easily be added to the workspace. This is all made possible with this bash function in my `.zshrc` file:
 
 ```bash
 # This is an adaptation of a guide to managing dotfiles. 
