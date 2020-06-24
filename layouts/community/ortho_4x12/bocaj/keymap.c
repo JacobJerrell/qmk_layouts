@@ -14,8 +14,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include QMK_KEYBOARD_Ht
+#include QMK_KEYBOARD_H
 #include "bocaj.h"
+
+enum planck_keycodes {
+    TH_LVL = NEW_SAFE_RANGE,
+};
 
 #define LAYOUT_ortho_4x12_bocaj(...) WRAPPER_planck_bocaj(__VA_ARGS__)
 
@@ -45,24 +49,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //   )
 
   [_WORKMAN] = LAYOUT_ortho_4x12_bocaj(
-    KC_TAB,  _______________WORKMAN_LHS_1_______________,  _______________WORKMAN_RHS_1_______________,   KC_BSLS,
-    KC_LEAD, _______________WORKMAN_LHS_2_______________,  _______________WORKMAN_RHS_2_______________,   KC_QUOT,
-    KC_LSFT, _______________WORKMAN_LHS_3_______________,  _______________WORKMAN_RHS_3_______________,   TT_MSE,
-    XXXXXXX, KC_LBRC, KC_UP, KC_LEFT, KC_BSPACE, KC_SPACE, XXXXXXX, KC_ENTER, KC_RIGHT, KC_DOWN, KC_RBRC, TT_ADJ
+    KC_ESC,  _______________WORKMAN_LHS_1_______________,  _______________WORKMAN_RHS_1_______________,   KC_BSLS,
+    KC_TAB,  _______________WORKMAN_LHS_2_______________,  _______________WORKMAN_RHS_2_______________,   KC_QUOT,
+    KC_LSFT, _______________WORKMAN_LHS_3_______________,  _______________WORKMAN_RHS_3_______________,   XXXXXXX,
+    KC_LEAD, KC_LBRC, KC_UP, KC_LEFT, KC_BSPACE, KC_SPACE, XXXXXXX, KC_ENTER, KC_RIGHT, KC_DOWN, KC_RBRC, MO_MSE
   ),
 
   [_QWERTY] = LAYOUT_ortho_4x12_bocaj(
-    KC_TAB,  ________________QWERTY_LHS1________________,  ________________QWERTY_RHS1________________,   KC_BSLS,
-    KC_LEAD, ________________QWERTY_LHS2________________,  ________________QWERTY_RHS2________________,   KC_QUOT,
-    KC_LSFT, ________________QWERTY_LHS3________________,  ________________QWERTY_RHS3________________,   TT_MSE,
-    XXXXXXX, KC_LBRC, KC_UP, KC_LEFT, KC_BSPACE,KC_SPACE,  XXXXXXX, KC_ENTER, KC_RIGHT, KC_DOWN, KC_RBRC, TT_ADJ
+    KC_ESC,  ________________QWERTY_LHS1________________,  ________________QWERTY_RHS1________________,   KC_BSLS,
+    KC_TAB,  ________________QWERTY_LHS2________________,  ________________QWERTY_RHS2________________,   KC_QUOT,
+    KC_LSFT, ________________QWERTY_LHS3________________,  ________________QWERTY_RHS3________________,   XXXXXXX,
+    KC_LEAD, KC_LBRC, KC_UP, KC_LEFT, KC_BSPACE,KC_SPACE,  XXXXXXX, KC_ENTER, KC_RIGHT, KC_DOWN, KC_RBRC, MO_MSE
   ),
 
   [_LOWER] = LAYOUT_ortho_4x12_bocaj(
-     _______, _______, _______, KC_UP,   _______,  _______,  _______, KC_7, KC_8,    KC_9,    KC_PSLS, _______,
-     _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT, _______,  _______, KC_4, KC_5,    KC_6,    KC_PAST, _______,
-     _______, _______, _______, _______, _______,  _______,  _______, KC_1, KC_2,    KC_3,    KC_PMNS, _______,
-     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPACE,KC_SPACE,  XXXXXXX, KC_0, KC_PDOT, KC_COMM, KC_PEQL, _______
+     KC_GRAVE, _______, _______, KC_UP,  XXXXXXX,   MC_ARRW,  KC_MINS, KC_7, KC_8,    KC_9,    KC_PSLS, KC_EQUAL,
+     KC_DEL, _______, KC_LEFT, KC_DOWN,  KC_RIGHT,  KC_LPRN,  KC_RPRN, KC_4, KC_5,    KC_6,    KC_PAST, KC_ENTER,
+     _______, _______, XXXXXXX, XXXXXXX, XXXXXXX,   KC_LBRC,  KC_RBRC, KC_1, KC_2,    KC_3,    KC_PPLS, _______,
+     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPACE, KC_SPACE, XXXXXXX, KC_0, KC_PDOT, KC_COMM, KC_MINS, XXXXXXX
   ),
 
   [_MOUSE] = LAYOUT_planck_grid(
@@ -74,10 +78,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
   [_RAISE] = LAYOUT_ortho_4x12_bocaj(
-    KC_GRAVE, ________________NUMBERS_LHS________________, ________________NUMBERS_RHS________________, MC_ARRW,
-    _______,  ________________SYMBOLS_LHS________________, ________________SYMBOLS_RHS________________, KC_EQUAL,
-    _______,  KC_F1,   KC_F2,    KC_F3,    KC_F4,   KC_F5, KC_F6,   KC_F7,   KC_F8,    KC_F9,   KC_F10, MC_ARRW,
-    _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    KC_GRAVE,  ________________NUMBERS_LHS________________,    ________________NUMBERS_RHS________________, KC_MINS,
+    KC_F1,     KC_F2,    KC_F3,    KC_F4,    KC_F5,  KC_F6,    KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11, KC_F12,
+    _______,  _______,  _______,  _______, _______, _______,   _______, _______, _______, _______, _______, _______,
+    _______,  _______,  _______,  _______, _______, _______,   _______, _______, _______, _______, _______, _______
   ),
 
 //   [_] = LAYOUT_planck_grid(
@@ -99,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ADJUST] = LAYOUT_ortho_4x12_bocaj(
     _______, RESET,    DEBUG,       RGB_TOG,   RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_DEL,
     _______, KC__MUTE, KC__VOLDOWN, KC__VOLUP, MC_LOCK, AU_TOG,  MU_MOD,  MC_WRKM, MC_QWRT, _______, _______, _______,
-    _______, MUV_DE,   MUV_IN,      MU_ON,     MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______,
+    _______, MUV_DE,   MUV_IN,      MU_ON,     MU_OFF,  MI_ON,   MI_OFF,   TH_LVL, _______, _______, _______, _______,
     _______, _______,  _______,     _______,   _______, _______, _______, _______, _______, _______, _______, _______
   )
 
@@ -113,9 +117,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-layer_state_t layer_state_set_keymap(layer_state_t state) {
+// layer_state_t layer_state_set_keymap(layer_state_t state) {
 
-}
+// }
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -138,8 +142,6 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
         }
         break;
-
-    }
     case TH_LVL:
         if (record->event.pressed) {
             keyboard_config.led_level++;
@@ -152,6 +154,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
             layer_state_set_kb(layer_state);
         }
         break;
+    }
     return true;
 }
 
