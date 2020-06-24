@@ -128,6 +128,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
         }
         break;
+        return false;
     case _RAISE:
         if (record->event.pressed) {
             layer_on(_RAISE);
@@ -137,6 +138,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
         }
         break;
+
     }
     case TH_LVL:
         if (record->event.pressed) {
