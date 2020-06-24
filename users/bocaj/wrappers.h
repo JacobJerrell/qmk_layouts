@@ -48,10 +48,10 @@ expanded before being used as arguments to the LAYOUT_xxx macro.
   K31, K32, K33, K34, K35, K36, K37, K38, K39, K3A, K3B, K3C  \
 )\
   WRAPPER_ortho_4x12( \
-    K01, K02,        K03,        K04,        K05,             K06, K07, K08,             K09,        K0A,        K0B,        K0C, \
-    K11, K12,        SFT_T(K13), GUI_T(K14), ALT_T(K15),      K16, K17, ALT_T(K18),      GUI_T(K19), SFT_T(K1A), K1B,        K1C, \
-    K21, CTL_T(K22), K23,        K24,        K25,             K26, K27, K28,             K29,        K2A,        CTL_T(K2B), K2C, \
-    K31, ALL_T(K32), K33,        K34,        LT(_LOWER, K35), K36, K37, LT(_RAISE, K38), K39,        K3A,        MEH_T(K3B), K3C \
+    K01,       K02,        K03,        K04,        K05,        K06,        K07,        K08,             K09,        K0A,        K0B,  K0C, \
+    K11,       K12,  SFT_T(K13), GUI_T(K14), ALT_T(K15), ALL_T(K16), MEH_T(K17), ALT_T(K18),      GUI_T(K19), SFT_T(K1A),       K1B,  K1C, \
+    K21, CTL_T(K22),       K23,        K24,        K25,        K26,        K27,        K28,             K29,        K2A,  CTL_T(K2B), K2C, \
+    K31, ALL_T(K32),       K33,        K34,  LT(_LOWER, K35),  K36,        K37,  LT(_RAISE, K38),       K39,        K3A,  MEH_T(K3B), K3C \
   )
 
 /* Keymap Blocks */
