@@ -1,50 +1,43 @@
 # Bocaj QMK Layout Workspace
 
-Simplifies navigating the qmk structure to be more efficient.
+This repo is a workspace that simplifies navigating my userspace and layouts from [qmk_firmware](https://docs.qmk.fm/), it also has the advantage of being tracked separate from the main qmk_firmware fork -- making PRs upstream much less cumbersome.
 
-## Git Usage & Compiling
+## Compiling
 
-The workspace can be used with Git commands/parameters OR changes are copied to the main qmk_firmware directory and runs the `qmk` command with the provided parameters. Furthermore, paths can easily be added to the workspace. This is all made possible with this bash function in my `.zshrc` file:
+The firmware can be compiled easily via the following function in .zshrc or whatever similar file you choose to use. Being sure to add the correct paths for your setup.
 
 ```bash
-# This is an adaptation of a guide to managing dotfiles. 
-# Many guides for this exist but I used https://medium.com/toutsbrasil/how-to-manage-your-dotfiles-with-git-f7aeed8adf8b
 qmkws () {
-    # TODO: Make a meaningful usage guide for invalid parameters
-    if [ -z "$1" ]
+    if [ -z "$1" ] || [ "$1" != "compile"]
     then
-        echo "Invalid usage. RTFM."
+        echo "Usage:"
+        echo "    - `qmkws compile` will copy the userspace and both layouts to qmk_firmware and then compile both"
+        echo "    - `qmkws compile planck` copies the userspace and the planck layout to qmk_firmware and then compiles the planck/ez layout"
+        echo "    - `qmkws compile ergodox` copies the userspace and the ergodox layout to qmk_firmware and then compiles the ergodox_ez layout"
         return
     fi
 
-    # TODO: allow params such as "status"/"commit"/"push"/etc... without the "git" parameter
-    if [ "$1" = "git" ]
+    echo "Copying workspace files to firmware directory..."
+    ditto -V ~/qmk_layouts/users/bocaj ~/qmk_firmware/users/bocaj
+    if [ -z "$2" ]
     then
-        # drop the firm parameter of `git` since we explicitly call git here"
-        shift
-        # this allows you to do things like `qmkws git add qmk_firmware/layouts/default`
-        /usr/bin/git --git-dir=/Users/username/path/to_workspace/.git --work-tree=/Users/username/path/to/qmk_firmware $*
-        return
-    # TODO: change to allow parameters "planck"/"ergo" (ommitting "compile") and only copy the applicable files, then compile for that keyboard
-    #       If neither is passed, copy all, compile all bocaj keyboards
-    elif [ "$1" = "compile" ]
+        echo "No parameters received. Copying and compiling both layouts..."
+        ditto -V ~/qmk_layouts/layouts/community/ortho_4x12/bocaj ~/qmk_firmware/layouts/community/ortho_4x12/bocaj
+        qmk compile -kb planck/ez
+        ditto -V ~/qmk_layouts/layouts/community/ergodox/bocaj ~/qmk_firmware/layouts/community/ergodox/bocaj
+        qmk compile -kb ergodox_ez
+    elif [[ "$2" == *"planck"* ]]
     then
-        echo "Copying workspace files to firmware directory..."
-        # `ditto` is a wonderful command that merges file path #1 into file path #2
-        # merge ergodox layout
-        ditto -V ~/path/to_workspace/layouts/community/ergodox/bocaj ~/path/to/qmk_firmware/layouts/community/ergodox/bocaj
-        # merge planck layout
-        ditto -V ~/path/to_workspace/layouts/community/ortho_4x12/bocaj ~/path/to/qmk_firmware/layouts/community/ortho_4x12/bocaj
-        # merge user space
-        ditto -V ~/path/to_workspace/users/bocaj ~/path/to/qmk_firmware/users/bocaj
-        # run `qmk compile param2 param3...`
-        qmk $*
-        return
-    else
-        echo "Error processing command"
-        echo "Invalid usage. RTFM."
-        return
+        echo "Copying and compiling Planck layout..."
+        ditto -V ~/qmk_layouts/layouts/community/ortho_4x12/bocaj ~/qmk_firmware/layouts/community/ortho_4x12/bocaj
+        qmk compile -kb planck/ez
+    elif [[ "$2" == *"ergodox"* ]]
+    then
+        echo "Copying and compiling Ergodox layout..."
+        ditto -V ~/qmk_layouts/layouts/community/ergodox/bocaj ~/qmk_firmware/layouts/community/ergodox/bocaj
+        qmk compile -kb ergodox_ez
     fi
+    return
 }
 ```
 
