@@ -25,14 +25,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 enum userspace_custom_keycodes {
-    KC_EPRM = PLACEHOLDER_SAFE_RANGE,
-    KC_VRSN,
-    RGB_SLD,
-    MC_ARRW,
-    MC_WRKM,
+    MC_WRKM = PLACEHOLDER_SAFE_RANGE,
     MC_QWRT,
+    // RGB_SLD,
+    MC_ARRW,
     MC_LOCK,
-    MC_LSWP,
     NEW_SAFE_RANGE
 };
 
@@ -59,5 +56,3 @@ void matrix_scan_secrets(void);
 
 // Other Keycodes
 #define KC_RST RESET
-
-void tap(uint16_t keycode);

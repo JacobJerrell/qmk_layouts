@@ -1,4 +1,5 @@
 #pragma once
+#include "config_common.h"
 
 /* Personal Configuration */
 #define LEADER_TIMEOUT 250

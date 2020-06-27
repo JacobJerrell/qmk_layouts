@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 #include "bocaj.h"
+#include "quantum.h"
 
 // `WRAPPER_ergodox_bocaj(...)` is the `LAYOUT_ergodox_pretty(...)` declaration with `X_T(KC)`'s to
 // persist alpha section tap/hold keys for CMD/CTRL/SHIFT/ALT/HYPER/GUI/LOWER/RAISE across all layouts
@@ -69,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_ADJUST] = WRAPPER_ergodox_pretty(
         _______, _______,  _______,     _______,   _______, _______, _______,       _______, _______, _______, _______, _______, _______, _______,
-        _______, RESET,    KC_EPRM,     _______,   _______, _______, _______,       _______, _______, _______, _______, _______, _______, _______,
+        _______, RESET,    EEP_RST,     _______,   _______, _______, _______,       _______, _______, _______, _______, _______, _______, _______,
         _______, KC__MUTE, KC__VOLDOWN, KC__VOLUP, MC_LOCK, _______,                         _______, _______, _______, _______, _______, _______,
         _______, _______,  _______,     _______,   _______, _______, _______,       _______, _______, _______, _______, _______, _______, _______,
         _______,  _______, _______,     _______,   _______,                                           _______, _______, _______, _______, _______,

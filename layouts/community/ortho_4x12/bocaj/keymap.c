@@ -17,11 +17,16 @@
 #include QMK_KEYBOARD_H
 #include "bocaj.h"
 
+#ifdef RGBLIGHT_ENABLE
+extern rgblight_config_t rgblight_config;
+#endif
+
 enum planck_keycodes {
     TH_LVL = NEW_SAFE_RANGE,
 };
 
 #define LAYOUT_ortho_4x12_bocaj(...) WRAPPER_planck_bocaj(__VA_ARGS__)
+#define LAYOUT_ortho_4x12_bocaj_alt(...) WRAPPER_planck_bocaj_alt(__VA_ARGS__)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -51,22 +56,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_WORKMAN] = LAYOUT_ortho_4x12_bocaj(
     KC_ESC,  _______________WORKMAN_LHS_1_______________,  _______________WORKMAN_RHS_1_______________,  KC_BSLS,
     KC_TAB,  _______________WORKMAN_LHS_2_______________,  _______________WORKMAN_RHS_2_______________,  KC_QUOT,
-    KC_LSFT, _______________WORKMAN_LHS_3_______________,  _______________WORKMAN_RHS_3_______________,  KC_LEAD,
-    MO_MSE, KC_LBRC, KC_UP, KC_LEFT, KC_BSPACE, KC_SPACE, XXXXXXX, KC_ENTER, KC_RIGHT, KC_DOWN, KC_RBRC, XXXXXXX
+    KC_LSFT, _______________WORKMAN_LHS_3_______________,  _______________WORKMAN_RHS_3_______________,  _______,
+    KC_LEAD, KC_LBRC, KC_UP, KC_LEFT, KC_BSPACE, KC_SPACE, _______, KC_ENTER, KC_RIGHT, KC_DOWN, KC_RBRC, _______
   ),
 
   [_QWERTY] = LAYOUT_ortho_4x12_bocaj(
     KC_ESC,  ________________QWERTY_LHS1________________,  ________________QWERTY_RHS1________________,   KC_BSLS,
     KC_TAB,  ________________QWERTY_LHS2________________,  ________________QWERTY_RHS2________________,   KC_QUOT,
-    KC_LSFT, ________________QWERTY_LHS3________________,  ________________QWERTY_RHS3________________,   KC_LEAD,
-    MO_MSE, KC_LBRC, KC_UP, KC_LEFT, KC_BSPACE,KC_SPACE,  XXXXXXX, KC_ENTER, KC_RIGHT, KC_DOWN, KC_RBRC, XXXXXXX
+    KC_LSFT, ________________QWERTY_LHS3________________,  ________________QWERTY_RHS3________________,   _______,
+    KC_LEAD, KC_LBRC, KC_UP, KC_LEFT, KC_BSPACE,KC_SPACE,  _______, KC_ENTER, KC_RIGHT, KC_DOWN, KC_RBRC, _______
   ),
 
-  [_LOWER] = LAYOUT_ortho_4x12_bocaj(
-     KC_GRAVE, _______, _______, KC_UP,  XXXXXXX,   MC_ARRW,  KC_MINS, KC_7, KC_8,    KC_9,    KC_PSLS, KC_EQUAL,
+  [_LOWER] = LAYOUT_ortho_4x12_bocaj_alt(
+     KC_GRAVE, _______, _______, KC_UP,  _______,   MC_ARRW,  KC_MINS, KC_7, KC_8,    KC_9,    KC_PSLS, KC_EQUAL,
      KC_DEL, _______, KC_LEFT, KC_DOWN,  KC_RIGHT,  KC_LPRN,  KC_RPRN, KC_4, KC_5,    KC_6,    KC_PAST, KC_ENTER,
-     _______, _______, XXXXXXX, XXXXXXX, XXXXXXX,   KC_LBRC,  KC_RBRC, KC_1, KC_2,    KC_3,    KC_PPLS, _______,
-     _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPACE, KC_SPACE, XXXXXXX, KC_0, KC_PDOT, KC_COMM, KC_MINS, XXXXXXX
+     _______, _______, _______, _______, _______,   KC_LBRC,  KC_RBRC, KC_1, KC_2,    KC_3,    KC_PPLS, _______,
+     MO_MSE, _______, _______, _______, _______, KC_SPACE, _______, KC_0, KC_PDOT, KC_COMM, KC_MINS, _______
   ),
 
   [_MOUSE] = LAYOUT_planck_grid(
@@ -77,16 +82,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
 
-  [_RAISE] = LAYOUT_ortho_4x12_bocaj(
+  [_RAISE] = LAYOUT_ortho_4x12_bocaj_alt(
     KC_GRAVE,  ________________NUMBERS_LHS________________,    ________________NUMBERS_RHS________________, KC_MINS,
     KC_F1,     KC_F2,    KC_F3,    KC_F4,    KC_F5,  KC_F6,    KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11, KC_F12,
     _______,  _______,  _______,  _______, _______, _______,   _______, _______, _______, _______, _______, _______,
     _______,  _______,  _______,  _______, _______, _______,   _______, _______, _______, _______, _______, _______
   ),
-
-//   [_] = LAYOUT_planck_grid(
-
-//   ),
 
 /* Adjust (Lower + Raise)
  *                      v------------------------RGB CONTROL--------------------v
@@ -101,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
   [_ADJUST] = LAYOUT_ortho_4x12_bocaj(
-    _______, RESET,    DEBUG,       RGB_TOG,   RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_DEL,
+    _______, RESET,    EEP_RST,     RGB_TOG,   RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_DEL,
     _______, KC__MUTE, KC__VOLDOWN, KC__VOLUP, MC_LOCK, AU_TOG,  MU_MOD,  MC_WRKM, MC_QWRT, _______, _______, _______,
     _______, MUV_DE,   MUV_IN,      MU_ON,     MU_OFF,  MI_ON,   MI_OFF,   TH_LVL, _______, _______, _______, _______,
     _______, _______,  _______,     _______,   _______, _______, _______, _______, _______, _______, _______, _______
@@ -117,31 +118,44 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-// layer_state_t layer_state_set_keymap(layer_state_t state) {
+const rgblight_segment_t PROGMEM bocaj_lower_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    // Light up the arrow keys
+    {3, 1, HSV_RED},       // Light 4 LEDs, starting with LED 6
+    {14, 3, HSV_RED}       // Light 4 LEDs, starting with LED 12
+);
 
-// }
+// Remember that lower layers override the layers above them
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] =
+    RGBLIGHT_LAYERS_LIST( bocaj_lower_layer );
+
+// Runs whenever there is a layer state change.
+layer_state_t layer_state_set_keymap(layer_state_t state) {
+    planck_ez_left_led_off();
+    planck_ez_right_led_off();
+    switch (get_highest_layer(state)) {
+        case _LOWER:
+        case _MOUSE:
+            planck_ez_left_led_on();
+            break;
+        case _RAISE:
+            planck_ez_right_led_on();
+            break;     
+        case _ADJUST:
+            planck_ez_left_led_on();
+            planck_ez_right_led_on();
+            break;
+        default:
+            
+            break;
+    }
+
+    rgblight_set_layer_state(1, layer_state_cmp(state, 1));
+
+    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+};
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-    case _LOWER:
-        if (record->event.pressed) {
-            layer_on(_LOWER);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        } else {
-            layer_off(_LOWER);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        }
-        break;
-        return false;
-    case _RAISE:
-        if (record->event.pressed) {
-            layer_on(_RAISE);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        } else {
-            layer_off(_RAISE);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        }
-        break;
     case TH_LVL:
         if (record->event.pressed) {
             keyboard_config.led_level++;
@@ -154,9 +168,20 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
             layer_state_set_kb(layer_state);
         }
         break;
+        return false;
     }
     return true;
 }
+
+void keyboard_post_init_keymap(void) {
+    // Enable the LED layers
+    rgblight_layers = my_rgb_layers;
+}
+
+// bool led_update_user(led_t led_state) {
+//     rgblight_set_layer_state(0, led_state.caps_lock);
+//     return true;
+// }
 
 // bool muse_mode = false;
 // uint8_t last_muse_note = 0;

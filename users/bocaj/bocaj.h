@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "eeprom.h"
 #include "wrappers.h"
 #include "process_records.h"
+#include "quantum.h"
 
 enum userspace_layers {
     _WORKMAN = 0,
