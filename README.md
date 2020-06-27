@@ -7,37 +7,58 @@ This repo is a workspace that simplifies navigating my userspace and layouts fro
 The firmware can be compiled easily via the following function in .zshrc or whatever similar file you choose to use. Being sure to add the correct paths for your setup.
 
 ```bash
-qmkws () {
-    if [ -z "$1" ] || [ "$1" != "compile"]
+qmkbak() {
+    date=$(date '+%Y-%m-%dT%H%M%S')
+    if [ -f "/Users/username/qmk_firmware/planck_ez_bocaj.bin" ]
     then
-        echo "Usage:"
-        echo "    - `qmkws compile` will copy the userspace and both layouts to qmk_firmware and then compile both"
-        echo "    - `qmkws compile planck` copies the userspace and the planck layout to qmk_firmware and then compiles the planck/ez layout"
-        echo "    - `qmkws compile ergodox` copies the userspace and the ergodox layout to qmk_firmware and then compiles the ergodox_ez layout"
-        return
+        echo "Creating backup of last planck build"
+        ditto ~/qmk_firmware/planck_ez_bocaj.bin ~/qmk_layouts/backups/$date-planck_ez_bocaj.bin
+    else
+        echo "No recent planck builds found"
     fi
 
-    echo "Copying workspace files to firmware directory..."
-    ditto -V ~/qmk_layouts/users/bocaj ~/qmk_firmware/users/bocaj
-    if [ -z "$2" ]
+    if [ -f "/Users/username/qmk_firmware/ergodox_ez_bocaj.hex" ]
     then
-        echo "No parameters received. Copying and compiling both layouts..."
-        ditto -V ~/qmk_layouts/layouts/community/ortho_4x12/bocaj ~/qmk_firmware/layouts/community/ortho_4x12/bocaj
-        qmk compile -kb planck/ez
-        ditto -V ~/qmk_layouts/layouts/community/ergodox/bocaj ~/qmk_firmware/layouts/community/ergodox/bocaj
-        qmk compile -kb ergodox_ez
-    elif [[ "$2" == *"planck"* ]]
-    then
-        echo "Copying and compiling Planck layout..."
-        ditto -V ~/qmk_layouts/layouts/community/ortho_4x12/bocaj ~/qmk_firmware/layouts/community/ortho_4x12/bocaj
-        qmk compile -kb planck/ez
-    elif [[ "$2" == *"ergodox"* ]]
-    then
-        echo "Copying and compiling Ergodox layout..."
-        ditto -V ~/qmk_layouts/layouts/community/ergodox/bocaj ~/qmk_firmware/layouts/community/ergodox/bocaj
-        qmk compile -kb ergodox_ez
+        echo "Creating backup of last ergodox build"
+        ditto ~/qmk_firmware/ergodox_ez_bocaj.hex ~/qmk_layouts/backups/$date-ergodox_ez_bocaj.hex
+    else
+        echo "No recent ergodox builds found"
     fi
-    return
+}
+
+qmkws () {
+    if [ "$1" != "compile" ]
+    then
+        echo "Usage:"
+        echo "    - \`qmkws compile\` will copy the userspace and both layouts to qmk_firmware and then compile both"
+        echo "    - \`qmkws compile planck\` copies the userspace and the planck layout to qmk_firmware and then compiles the planck/ez layout"
+        echo "    - \`qmkws compile ergodox\` copies the userspace and the ergodox layout to qmk_firmware and then compiles the ergodox_ez layout"
+        return
+    else
+        echo "Creating backups..."
+        qmkbak
+        echo "Copying workspace files to firmware directory..."
+        ditto ~/qmk_layouts/users/bocaj ~/qmk_firmware/users/bocaj
+        if [ -z "$2" ]
+        then
+            echo "No parameters received. Copying and compiling both layouts..."
+            ditto ~/qmk_layouts/layouts/community/ortho_4x12/bocaj ~/qmk_firmware/layouts/community/ortho_4x12/bocaj
+            qmk compile -kb planck/ez
+            ditto ~/qmk_layouts/layouts/community/ergodox/bocaj ~/qmk_firmware/layouts/community/ergodox/bocaj
+            qmk compile -kb ergodox_ez
+        elif [[ "$2" == *"planck"* ]]
+        then
+            echo "Copying and compiling Planck layout..."
+            ditto ~/qmk_layouts/layouts/community/ortho_4x12/bocaj ~/qmk_firmware/layouts/community/ortho_4x12/bocaj
+            qmk compile -kb planck/ez
+        elif [[ "$2" == *"ergodox"* ]]
+        then
+            echo "Copying and compiling Ergodox layout..."
+            ditto ~/qmk_layouts/layouts/community/ergodox/bocaj ~/qmk_firmware/layouts/community/ergodox/bocaj
+            qmk compile -kb ergodox_ez
+        fi
+        return
+    fi
 }
 ```
 
