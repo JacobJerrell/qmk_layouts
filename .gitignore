@@ -1,1 +1,4 @@
-drashna
+# Don't track inspirational or default layouts
+drashna/
+default/
+secrets.*
