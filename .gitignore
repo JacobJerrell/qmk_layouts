@@ -2,3 +2,6 @@
 drashna/
 default/
 secrets.*
+
+.DS_Store
+.vscode/
