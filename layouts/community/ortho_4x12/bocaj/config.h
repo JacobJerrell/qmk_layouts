@@ -3,8 +3,6 @@
 #define LEADER_TIMEOUT 250
 #define LEADER_PER_KEY_TIMING
 
-#define LEARNING_MODE
-
 #if defined(RGBLIGHT_ENABLE) && !defined(RGBLED_NUM)
 #    if defined(KEYBOARD_planck_light)
 #        define RGB_DI_PIN A0

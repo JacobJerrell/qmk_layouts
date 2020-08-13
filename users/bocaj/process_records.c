@@ -43,6 +43,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 break;
 
+            case MC_LOCK:
+                if (!record->event.pressed) {
+                    layer_move(0);
+                    tap_code16(LCTL(LGUI(KC_Q)));                    
+                }
+                break;
+
+            case MC_ARRW:
+                if (!record->event.pressed) {
+                    SEND_STRING("->");
+                }
+                break;
+
             case KC_MAKE:  // Compiles the firmware, and adds the flash command based on keyboard bootloader
                 if (!record->event.pressed) {
 #ifndef MAKE_BOOTLOADER

@@ -23,9 +23,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "eeprom.h"
 #include "wrappers.h"
 #include "process_records.h"
-#ifdef TAP_DANCE_ENABLE
-#    include "tap_dances.h"
-#endif  // TAP_DANCE_ENABLE
 #if defined(RGBLIGHT_ENABLE)
 #    include "rgb_stuff.h"
 #endif

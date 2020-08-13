@@ -17,34 +17,16 @@ enum planck_keycodes {
 };
 #endif
 
-#ifdef KEYBOARD_planck_ez
-#    define PLNK_1 BK_LWER
-#    define PLNK_2 SP_LWER
-#    define PLNK_3 KC_NO
-#    define PLNK_4 ET_RAIS
-#else
-#    define PLNK_1 SP_LWER
-#    define PLNK_2 BK_LWER
-#    define PLNK_3 DL_RAIS
-#    define PLNK_4 ET_RAIS
-#endif
-
-#ifdef LEARNING_MODE
-enum planck_layers { 
-    _LEARN = LAYER_SAFE_RANGE,
-};
-#endif
-
 /*
- * Tap/Hold Wrappeer
+ * Tap/Hold Wrapper
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |Shift | Cmd  | Alt  |Hyper | Meh  | Alt  | Cmd  |Shift |      |      |
+ * |      |      |Shift | Cmd  | Alt  |      |      | Alt  | Cmd  |Shift |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      | Ctrl |      |      |      |      |      |      |      |      | Ctrl |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Hypr |      |      |Lower |             |Raise |      |      | Meh  |      |
+ * |      |      |      |      |Lower |             |Raise |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 #define LAYOUT_ortho_4x12_bocaj(...) WRAPPER_planck_bocaj(__VA_ARGS__)
@@ -54,11 +36,11 @@ enum planck_layers {
  * ,-----------------------------------------------------------------------------------.
  * |  Esc |      |      |      |      |      |      |      |      |      |      |  -   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  Tab |      |      |      |      |      |      |      |      |      |      |  '   |
+ * |  Tab |      |      |      |      | HYPR | MEH  |      |      |      |      |  '   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|      |      |      |      |      |      |      |      |      |      | XXX  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Lead | XXX  |  Up  | Left |BkSpc |    Space    |Enter |Right | Down | XXX  | XXX  |
+ * | Lead |Mouse |  Up  | Left |BkSpc |    Space    |Enter |Right | Down | XXX  | XXX  |
  * `-----------------------------------------------------------------------------------'
  */
 #define LAYOUT_ortho_4x12_bocaj_base(...) WRAPPER_planck_bocaj_base(__VA_ARGS__)
@@ -113,23 +95,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _____________CARPLAX_QFMLWY_L3_____________, _____________CARPLAX_QFMLWY_R3_____________
   ),
 
+  [_MODS] = WRAPPER_ortho_4x12(
+    _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______,
+    KC_LSFT, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, KC_RSFT,
+    _______, _______, _______, _______, _______,      _______,      _______, _______, _______, _______, _______
+  ),
+
   [_LOWER] = LAYOUT_ortho_4x12_bocaj(
-    KC_GRV,  _________________LOWER_L1__________________, _________________LOWER_R1__________________, KC_BSPC,
-    KC_DEL,  _________________LOWER_L2__________________, _________________LOWER_R2__________________, KC_PIPE,
-    _______, _________________LOWER_L3__________________, _________________LOWER_R3__________________, _______,
-    MO_MSE,  _______, _______, _______, _______,      _______,     _______, _______, _______, _______, _______
+    KC_GRV,  _______, _______, KC_UP,   _______, KC_MINS, KC_EQUAL, KC_7, KC_8,   KC_9,    KC_BSLS, KC_EQUAL,
+    KC_DEL,  _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_LPRN, KC_RPRN,  KC_4, KC_5,   KC_6,    KC_ASTR, _______, 
+    _______, _______, _______, _______, _______, KC_LBRC, KC_RBRC,  KC_1, KC_2,   KC_3,    KC_PLUS, _______,
+    TT_MSE,  _______, _______, _______, _______,      _______,      KC_0, KC_DOT, KC_COMM, _______, _______
   ),
 
 
   [_MOUSE] = WRAPPER_ortho_4x12(
-    _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______,
-    _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,  _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
+    _______, _______, _______, KC_WH_D, _______, _______,  _______, _______, KC_MS_U, _______, _______, _______,
+    _______, _______, KC_WH_L, KC_WH_U, KC_WH_R, _______,  _______, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______,
     _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, KC_BTN1,      _______,      KC_BTN2, _______, _______, _______, _______
   ),
 
   [_RAISE] = LAYOUT_ortho_4x12_bocaj(
-    KC_TILD, _________________RAISE_L1__________________, _________________RAISE_R1__________________, KC_BSPC,
+    KC_TILD, _________________RAISE_L1__________________, _________________RAISE_R1__________________, KC_EQUAL,
     KC_DEL,  _________________RAISE_L2__________________, _________________RAISE_R2__________________, KC_BSLS,
     _______, _________________RAISE_L3__________________, _________________RAISE_R3__________________, _______,
     _______, _______, _______, _______, _______,     _______,      _______, _______, _______, _______, _______
@@ -139,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_MAKE, _________________ADJUST_L1_________________, _________________ADJUST_R1_________________, KC_RST,
     VRSN,    _________________ADJUST_L2_________________, _________________ADJUST_R2_________________, EEP_RST,
     TH_LVL,  _________________ADJUST_L3_________________, _________________ADJUST_R3_________________, RGB_IDL,
-    HPT_TOG, _______, _______, _______, _______,     KC_NUKE,   _______, TG(_LEARN), _______, _______, TG_MODS
+    HPT_TOG, _______, _______, _______, _______,     KC_NUKE,   _______, _______, _______, _______, TG_MODS
   )
 
 };
@@ -179,44 +168,12 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
 
 bool music_mask_user(uint16_t keycode) {
     switch (keycode) {
-        case RAISE:
-        case LOWER:
-        case BK_LWER:
-        case SP_LWER:
-        case DL_RAIS:
-        case ET_RAIS:
-            return false;
         default:
             return true;
     }
 }
 
 #ifdef RGB_MATRIX_ENABLE
-
-#    ifdef KEYBOARD_planck_rev6
-// clang-format off
-led_config_t g_led_config = {
-    {
-        // Key Matrix to LED Index
-        { NO_LED,   6,    NO_LED, NO_LED,   5,    NO_LED },
-        { NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED },
-        { NO_LED, NO_LED, NO_LED, NO_LED, NO_LED,   0    },
-        { NO_LED,   7,    NO_LED, NO_LED,   2,    NO_LED },
-        { NO_LED,   4,    NO_LED, NO_LED,   3,    NO_LED },
-        { NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED },
-        { NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED },
-        { NO_LED,   1,    NO_LED, NO_LED,   8,    NO_LED }
-    }, {
-        // LED Index to Physical Position
-        {112, 39}, {148, 60}, {206, 53}, {206, 3}, {150, 3}, {74, 3}, {18, 3}, {18, 54}, {77, 60}
-    }, {
-        // LED Index to Flag
-        LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL,
-        LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL, LED_FLAG_ALL
-    }
-};
-// clange-format on
-#    endif
 
 // clang-format off
 void suspend_power_down_keymap(void) {
@@ -246,14 +203,11 @@ void rgb_matrix_indicators_user(void) {
 #    endif
     {
         switch (get_highest_layer(layer_state)) {
-            case _GAMEPAD:
+            case _MOUSE:
                 rgb_matrix_layer_helper(HSV_ORANGE, 1, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
                 break;
-            case _DIABLO:
-                rgb_matrix_layer_helper(HSV_RED, 1, rgb_matrix_config.speed * 8, LED_FLAG_MODIFIER);
-                break;
             case _RAISE:
-                rgb_matrix_layer_helper(HSV_YELLOW, 1, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
+                rgb_matrix_layer_helper(HSV_BLUE, 1, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
                 break;
             case _LOWER:
                 rgb_matrix_layer_helper(HSV_GREEN, 1, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
@@ -274,10 +228,10 @@ void rgb_matrix_indicators_user(void) {
                         rgb_matrix_layer_helper(HSV_SPRINGGREEN, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
                         break;
                     case _WORKMAN:
-                        rgb_matrix_layer_helper(HSV_GOLDENROD, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
+                        rgb_matrix_layer_helper(HSV_CORAL, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
                         break;
                     case _NORMAN:
-                        rgb_matrix_layer_helper(HSV_CORAL, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
+                        rgb_matrix_layer_helper(HSV_GOLDENROD, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
                         break;
                     case _MALTRON:
                         rgb_matrix_layer_helper(HSV_YELLOW, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
