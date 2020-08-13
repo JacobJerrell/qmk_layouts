@@ -1,4 +1,5 @@
 # Don't track inspirational or default layouts
+backups/
 drashna/
 default/
 secrets.*
