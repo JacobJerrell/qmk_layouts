@@ -27,42 +27,11 @@
 #    define RGB_DISABLE_WHEN_USB_SUSPENDED true  // turn off effects when suspended
 #    undef RGB_MATRIX_LED_PROCESS_LIMIT
 #    undef RGB_MATRIX_LED_FLUSH_LIMIT
-#    ifdef KEYBOARD_planck_rev6
-#        define DRIVER_LED_TOTAL RGBLED_NUM
-#    endif
 #endif
 
-#if defined(KEYBOARD_lets_split_rev2)
-#    define USE_SERIAL
-#    undef USE_I2C
-#    define EE_HANDS
-#endif
-
-#if !defined(KEYBOARD_planck_light)
-#    ifdef RGBLIGHT_ENABLE
-#        define NO_MUSIC_MODE
-#    endif  // RGBLIGHT_ENABLE
-#else
-#    undef QMK_ESC_OUTPUT
-#    define QMK_ESC_OUTPUT E6  // usually COL
-#    undef QMK_ESC_INPUT
-#    define QMK_ESC_INPUT B0  // usually ROW
-#    undef QMK_LED
-#    define QMK_LED D6
-#    undef QMK_SPEAKER
-#    define QMK_SPEAKER B5
-#    define SOLENOID_PIN A1
-#endif  // KEYBOARD_planck_light
-
-#if defined(KEYBOARD_planck)
+#if defined(KEYBOARD_planck_ez)
 #    undef PRODUCT
-#    if defined(KEYBOARD_planck_light)
-#        define PRODUCT Drashna Hacked RGB Beacon(Planck Light)
-#    elif defined(KEYBOARD_planck_rev6)
-#        define PRODUCT Drashna Hacked Planck Rev6
-#    elif defined(KEYBOARD_planck_ez)
-#        define PRODUCT Bocaj Hacked Planck EZ
-#    endif
+#    define PRODUCT Bocaj Hacked Planck EZ
 #endif
 
 #define EEPROM_I2C_RM24C512C

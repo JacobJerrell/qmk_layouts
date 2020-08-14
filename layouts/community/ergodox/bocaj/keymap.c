@@ -71,9 +71,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, ___________________BLANK___________________,                           ___________________BLANK___________________, _______,
         _______, _______, KC_MRWD, KC_MPLY, KC_MFFD, _______, _______,         _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,                                             _______, _______, _______, _______, _______,
-                                            KC_APP,KC_HOME, /* <- LHS/RHS -> */ KC_END,KC_ESC,
-                                                     KC_PGUP, /* <- LHS/RHS -> */ KC_PGDN,
-                                  KC_SPACE,KC_BSPACE,KC_LEAD, /* <- LHS/RHS -> */ KC_LOCK,KC_TAB,KC_ENTER
+                                                 KC_APP,KC_HOME, /* <- LHS/RHS -> */ KC_END,KC_ESC,
+                                                        KC_PGUP, /* <- LHS/RHS -> */ KC_PGDN,
+                                     KC_SPACE,KC_BSPACE,KC_LEAD, /* <- LHS/RHS -> */ KC_LOCK,KC_TAB,KC_ENTER
     ),
 
     [_ADJUST] = LAYOUT_ergodox_pretty(
@@ -82,13 +82,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC__MUTE, KC__VOLDOWN, KC__VOLUP, MC_LOCK, _______,                         _______, _______, _______, _______, _______, _______,
         _______, _______,  _______,     _______,   _______, _______, _______,       _______, _______, _______, _______, _______, _______, _______,
         _______,  _______, _______,     _______,   _______,                                           _______, _______, _______, _______, _______,
-                                                   KC_APP,KC_HOME, /* <- LHS/RHS -> */ KC_END,KC_ESC,
+                                              KC_APP,KC_HOME, /* <- LHS/RHS -> */ KC_END,KC_ESC,
                                                      KC_PGUP, /* <- LHS/RHS -> */ KC_PGDN,
                                   KC_SPACE,KC_BSPACE,KC_LEAD, /* <- LHS/RHS -> */ KC_LOCK,KC_TAB,KC_ENTER
     )
  
 };
 // clang-format on
+
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) { return true; }
 
 // Runs whenever there is a layer state change.
 layer_state_t layer_state_set_keymap(layer_state_t state) {
@@ -99,14 +101,14 @@ layer_state_t layer_state_set_keymap(layer_state_t state) {
 
     uint8_t layer = get_highest_layer(state);
     switch (layer) {
-        case _RAISE:
-            ergodox_right_led_1_on();
+        case _LOWER:
+            ergodox_right_led_3_on();
             break;
         case _MOUSE:
             ergodox_right_led_2_on();
             break;
-        case _LOWER:
-            ergodox_right_led_3_on();
+        case _RAISE:
+            ergodox_right_led_1_on();
             break;
         case _ADJUST:
             ergodox_right_led_1_on();
