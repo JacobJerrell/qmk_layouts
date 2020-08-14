@@ -65,7 +65,7 @@ expanded before being used as arguments to the LAYOUT_xxx macro.
     KC_ESC,  K01,     K02,   K03,     K04,        K05,        K06,  K07,      K08,      K09,     K0A,     KC_MINS, \
     KC_TAB,  K11,     K12,   K13,     K14,  ALL_T(K15), MEH_T(K16), K17,      K18,      K19,     K1A,     KC_QUOT, \
     KC_LSFT, K21,     K22,   K23,     K24,        K25,        K26,  K27,      K28,      K29,     K2A,     KC_TRNS, \
-    KC_LEAD, TT_MSE, KC_UP, KC_LEFT, KC_BSPC,          KC_SPC,      KC_ENTER, KC_RIGHT, KC_DOWN, KC_TRNS, KC_TRNS  \
+    KC_LEAD, _______, KC_UP, KC_LEFT, KC_BSPC,          KC_SPC,      KC_ENTER, KC_RIGHT, KC_DOWN, KC_TRNS, KC_TRNS  \
   )
 
 /*
@@ -214,7 +214,7 @@ NOTE: These are all the same length.  If you do a search/replace
 #define _________________ADJUST_L2_________________        KC_MUTE, KC_VOLD, KC_VOLU, KC_MNXT, MG_NKRO
 #define _________________ADJUST_L3_________________        RGB_RMOD,RGB_HUD,RGB_SAD, RGB_VAD, KC_RGB_T
 
-#define _________________ADJUST_R1_________________        KC_SEC1, KC_SEC2, KC_SEC3, KC_SEC4, KC_SEC5
+#define _________________ADJUST_R1_________________        ___________________BLANK___________________
 #define _________________ADJUST_R2_________________        CG_SWAP, WORKMAN, QWERTY,  COLEMAK, DVORAK
 #define _________________ADJUST_R3_________________        MU_TOG , CK_TOGG, AU_ON,   AU_OFF,  CG_NORM
 
