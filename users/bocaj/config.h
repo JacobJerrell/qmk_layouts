@@ -7,11 +7,6 @@
 #define USB_POLLING_INTERVAL_MS 1
 
 #ifdef AUDIO_ENABLE
-#    if __GNUC__ > 5
-#        if __has_include("drashna_song_list.h")
-#            include "drashna_song_list.h"
-#        endif  // if file exists
-#    endif      // __GNUC__
 
 #    define AUDIO_CLICKY
 #    define STARTUP_SONG SONG(RICK_ROLL)
@@ -27,18 +22,6 @@
 #    define UNICODE_SONG_BSD SONG(RICK_ROLL)
 #    define UNICODE_SONG_WINC SONG(RICK_ROLL)
 #endif  // !AUDIO_ENABLE
-
-#ifdef RGBLIGHT_ENABLE
-#    undef RGBLIGHT_ANIMATIONS
-#    if defined(__AVR__) && !defined(__AVR_AT90USB1286__)
-#        define RGBLIGHT_SLEEP
-#        define RGBLIGHT_EFFECT_BREATHING
-#        define RGBLIGHT_EFFECT_SNAKE
-#        define RGBLIGHT_EFFECT_KNIGHT
-#    else
-#        define RGBLIGHT_ANIMATIONS
-#    endif
-#endif  // RGBLIGHT_ENABLE
 
 #ifdef RGB_MATRIX_ENABLE
 #    define RGB_MATRIX_KEYPRESSES  // reacts to keypresses (will slow down matrix scan by a lot)
@@ -90,14 +73,6 @@
 #    endif  // AVR
 #endif      // RGB_MATRIX_ENABLE
 
-#ifndef ONESHOT_TAP_TOGGLE
-#    define ONESHOT_TAP_TOGGLE 2
-#endif  // !ONESHOT_TAP_TOGGLE
-
-#ifndef ONESHOT_TIMEOUT
-#    define ONESHOT_TIMEOUT 3000
-#endif  // !ONESHOT_TIMEOUT
-
 #ifdef QMK_KEYS_PER_SCAN
 #    undef QMK_KEYS_PER_SCAN
 #    define QMK_KEYS_PER_SCAN 1
@@ -123,8 +98,6 @@
 #endif  // TAPPING_TERM
 #if defined(KEYBOARD_ergodox_ez)
 #    define TAPPING_TERM 185
-#elif defined(KEYBOARD_crkbd)
-#    define TAPPING_TERM 200
 #else
 #    define TAPPING_TERM 175
 #endif
