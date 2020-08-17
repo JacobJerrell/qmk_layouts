@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include QMK_KEYBOARD_H
 #include "bocaj.h"
 
 /*
@@ -53,11 +54,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // Wrapping Mouse-Wheel Keys with `X_T()` style functions seems
     // to break the mouse button. So we can't use the wrapper here.
     [_MOUSE] = LAYOUT_ergodox_pretty(
-        _______, _________________UNDEFINED_________________, _______,           _______, _________________UNDEFINED_________________, _______,
-        _______, XXXXXXX, XXXXXXX, KC_WH_D, XXXXXXX, XXXXXXX, _______,           _______, XXXXXXX, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX, _______,
-        _______, XXXXXXX, KC_WH_L, KC_WH_U, KC_WH_R, XXXXXXX,                             XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX, _______,
-        _______, _________________UNDEFINED_________________, _______,           _______, _________________UNDEFINED_________________, _______,
-        _______, _______, _______, _______, KC_ACL0,                                               KC_ACL1, KC_ACL2, _______, _______, _______,
+        _______, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO, _______,           _______, KC_NO,   KC_NO,   KC_NO,     KC_NO,   KC_NO, _______,
+        _______, KC_NO, KC_NO,   KC_WH_D, KC_NO,   KC_NO, _______,           _______, KC_NO,   KC_NO,   KC_MS_U,   KC_NO,   KC_NO, _______,
+        _______, KC_NO, KC_WH_L, KC_WH_U, KC_WH_R, KC_NO,                             KC_NO,   KC_MS_L, KC_MS_D,   KC_MS_R, KC_NO, _______,
+        _______, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO, _______,           _______, KC_NO,   KC_NO,   KC_NO,     KC_NO,   KC_NO, _______,
+        _______, _______, _______, _______, KC_ACL0,                                           KC_ACL1, KC_ACL2, _______, _______, _______,
                                                  _______,_______, /* <- LHS/RHS -> */ _______,_______,
                                                          _______, /* <- LHS/RHS -> */ _______,
                                          KC_BTN1,KC_BTN3,_______, /* <- LHS/RHS -> */ _______,KC_BTN4,KC_BTN2
@@ -75,21 +76,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_ADJUST] = LAYOUT_ergodox_pretty(
-        KC_MAKE, ___________________BLANK___________________, _______,       _______, ___________________BLANK___________________, KC_RST,
-        VRSN,    ___________________BLANK___________________, _______,       _______, ___________________BLANK___________________, EEP_RST,
-        _______, _________________ADJUST_L2_________________,                         ___________________BLANK___________________, _______,
-        _______, ___________________BLANK___________________, _______,       _______, ___________________BLANK___________________, _______,
-        ___________________BLANK___________________,                                           ___________________BLANK___________________,
+        KC_MAKE, _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______, KC_RST,
+        VRSN,    _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______, EEP_RST,
+        _______, KC__MUTE, KC__VOLDOWN, KC__VOLUP, MC_LOCK, KC_MNXT,                         _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,                                           _______, _______, _______, _______, _______,
                                               KC_APP,KC_HOME, /* <- LHS/RHS -> */ KC_END,KC_ESC,
                                                      KC_PGUP, /* <- LHS/RHS -> */ KC_PGDN,
                                   KC_SPACE,KC_BSPACE,KC_LEAD, /* <- LHS/RHS -> */ KC_LOCK,KC_TAB,KC_ENTER
     )
- 
+
 };
 // clang-format on
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
-  return false;
+    return false;
 }
 
 void matrix_init_keymap(void) {};
@@ -128,14 +129,17 @@ layer_state_t layer_state_set_keymap(layer_state_t state) {
 };
 
 void matrix_scan_keymap(void) {
-  uint8_t modifiers = get_mods();
-  uint8_t led_usb_state = host_keyboard_leds();
-  uint8_t one_shot = get_oneshot_mods();
+    uint8_t modifiers = get_mods();
+    uint8_t led_usb_state = host_keyboard_leds();
+    uint8_t one_shot = get_oneshot_mods();
+    uint8_t layer_is_workman = layer_state_is(_WORKMAN);
 
-    if (modifiers) {
+    if ((modifiers) && (layer_is_workman)) {
         if (modifiers & MODS_SHIFT_MASK || led_usb_state & (1<<USB_LED_CAPS_LOCK) || one_shot & MODS_SHIFT_MASK) {
             ergodox_right_led_1_on();
             ergodox_right_led_1_set( 25 );
+        } else {
+            ergodox_right_led_1_off();
         }
         if ((modifiers & MODS_CTRL_MASK || one_shot & MODS_CTRL_MASK) && (modifiers & MODS_GUI_MASK || one_shot & MODS_GUI_MASK)) {
             ergodox_right_led_2_on();
@@ -143,10 +147,18 @@ void matrix_scan_keymap(void) {
         } else if ((modifiers & MODS_CTRL_MASK || one_shot & MODS_CTRL_MASK) || (modifiers & MODS_GUI_MASK || one_shot & MODS_GUI_MASK)) {
             ergodox_right_led_2_on();
             ergodox_right_led_2_set( 10 );
+        } else {
+            ergodox_right_led_2_off();
         }
         if (modifiers & MODS_ALT_MASK || one_shot & MODS_ALT_MASK) {
             ergodox_right_led_3_on();
             ergodox_right_led_3_set( 10 );
+        } else {
+            ergodox_right_led_3_off();
         }
+    } else if (!(modifiers) && (layer_is_workman)) {
+        ergodox_right_led_1_off();
+        ergodox_right_led_2_off();
+        ergodox_right_led_3_off();
     }
 };
