@@ -5,3 +5,7 @@ default/
 secrets.*
 .DS_Store
 .vscode/
+
+# Don't track build backups
+*.bin
+*.hex
