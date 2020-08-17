@@ -168,7 +168,7 @@ void rgb_matrix_indicators_user(void) {
                 rgb_matrix_layer_helper(HSV_RED, 1, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
                 break;
             default: {
-                bool mods_enabled = IS_LAYER_ON(_MODS);
+                bool mods_enabled = false;
                 switch (get_highest_layer(default_layer_state)) {
                     case _QWERTY:
                         rgb_matrix_layer_helper(HSV_CYAN, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
@@ -181,18 +181,6 @@ void rgb_matrix_indicators_user(void) {
                         break;
                     case _WORKMAN:
                         rgb_matrix_layer_helper(HSV_CORAL, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
-                        break;
-                    case _NORMAN:
-                        rgb_matrix_layer_helper(HSV_GOLDENROD, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
-                        break;
-                    case _MALTRON:
-                        rgb_matrix_layer_helper(HSV_YELLOW, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
-                        break;
-                    case _EUCALYN:
-                        rgb_matrix_layer_helper(HSV_PINK, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
-                        break;
-                    case _CARPLAX:
-                        rgb_matrix_layer_helper(HSV_BLUE, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
                         break;
                 }
                 break;
