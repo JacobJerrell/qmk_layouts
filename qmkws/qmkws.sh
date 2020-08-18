@@ -4,7 +4,10 @@
 ###############
 
 # The path to your qmk firmware folder
-QMK_HOME="/Users/jacob/Projects/qmk/qmk_firmware"
+qmk_home="/Users/j792280/qmk_firmware"
+
+# The path to your workspace folder
+qmk_workspace="/Users/j792280/qmk_layouts"
 
 # Note
 # This script makes the assumption that your userspace contains a file named <qmk_user>.c
@@ -24,6 +27,7 @@ layouts=(
     "ortho_4x12"
     "ergodox"
 )
+
 ############################################
 # **WARNING**
 # You shouldn't need to edit below this line
@@ -79,7 +83,7 @@ copy_layout()
             fi
         fi
         mkdir $qmk_home/users/$qmk_user
-        ditto users/$qmk_user $qmk_home/users/$qmk_user
+        ditto $qmk_workspace/users/$qmk_user $qmk_home/users/$qmk_user
         # If the assumption mentioned in the definition of qmk_user doesn't apply to you, change this:
         if [ -f "${qmk_home}/users/${qmk_user}/${qmk_user}.c" ]; then
             should_copy_user="false"
@@ -94,7 +98,7 @@ copy_layout()
         rm -rf $qmk_home/layouts/community/${layouts[$1]}/$qmk_user
     fi
     mkdir $qmk_home/layouts/community/${layouts[$1]}/$qmk_user
-    ditto layouts/community/${layouts[$1]}/$qmk_user $qmk_home/layouts/community/${layouts[$1]}/$qmk_user
+    ditto $qmk_workspace/layouts/community/${layouts[$1]}/$qmk_user $qmk_home/layouts/community/${layouts[$1]}/$qmk_user
     if [ -f "${qmk_home}/layouts/community/${layouts[$1]}/${qmk_user}/keymap.c" ]; then
         echo "Successfully copied keymap from source"
     fi
