@@ -7,20 +7,20 @@
 QMK_HOME="/Users/jacob/Projects/qmk/qmk_firmware"
 
 # Note
-# This script makes the assumption that your userspace contains a file named <QMK_USER>.c
+# This script makes the assumption that your userspace contains a file named <qmk_user>.c
 # Usually your github username but could be anything
-QMK_USER="bocaj"
+qmk_user="bocaj"
 
 # The path to your keyboard(s) and revision relative to qmk_firmware/keyboards/
 # Note: This is the `-kb` parameter in the `qmk compile` command
-KEYBOARDS=( 
+keyboards=( 
     "planck/ez" # Keyboard w/ revision path
     "ergodox_ez" # Keyboard w/out revision path
 )
 
 # The path where your layout will be stored relative to 
-# "QMK_HOME/layouts/" in the same order as the previous array
-LAYOUTS=(
+# "qmk_home/layouts/" in the same order as the previous array
+layouts=(
     "ortho_4x12"
     "ergodox"
 )
@@ -28,28 +28,29 @@ LAYOUTS=(
 # **WARNING**
 # You shouldn't need to edit below this line
 ############################################
-TEST_FILE="quantum/api.c"
+test_file="quantum/api.c"
 
 if [[ "$1" == "compile" ]]; then
-    SHOULD_COMPILE=true
+    should_compile="true"
+    echo "Should be compiling"
     shift
 else
-    unset -f SHOULD_COMPILE
+    should_compile="false"
 fi
 
 # Validate build environment 
-if [ -d "${QMK_HOME}" ]; then
-    if [[ ! -r "$QMK_HOME/$TEST_FILE" ]]; then
-        echo "Fatal Error: Firmware does not appear to exist at ${QMK_HOME}.
+if [ -d "${qmk_home}" ]; then
+    if [[ ! -r "${qmk_home}/${test_file}" ]]; then
+        echo "Fatal Error: Firmware does not appear to exist at ${qmk_home}.
         - Check your configuration by editing the ``qmkws.sh`` file
         - Otherwise, you may need to clone and setup QMK first. Link: https://docs.qmk.fm/#/newbs_getting_started"
         exit 127 # Possible PATH issue
     else
-        echo "Firmware Path: ${QMK_HOME}"
+        echo "Firmware Path: ${qmk_home}"
     fi
 fi
 
-if [[ ! qmk && SHOULD_COMPILE == true ]]; then
+if [[ ! qmk && should_compile == "true" ]]; then
     echo "Fatal Error: You need to setup QMK first. Link: https://docs.qmk.fm/#/newbs_getting_started?id=set-up-qmk"
     exit 126 # Cannot invoke required command
 fi
@@ -59,38 +60,42 @@ if [[ ! ditto ]]; then
     exit 126 # Cannot invoke required command
 fi
 
-SHOULD_COPY_USER=true
+should_copy_user="true"
 
 copy_layout()
 {
-    KEYBOARD=$1
-    if [ ! -d "${QMK_HOME}/layouts/community/$KEYBOARD" ]; then
-        echo "Keyboard does not exist at: ${QMK_HOME}/layouts/community/$KEYBOARD"
+    # copy_layout ${keyboards[$k]}
+    if [ ! -d "${qmk_home}/keyboards/${keyboards[$1]}" ]; then
+        echo "Keyboard does not exist at: ${qmk_home}/keyboards/${keyboards[$1]}"
         exit 127 # Possible PATH issue
-    elif [[ SHOULD_COPY_USER == true ]]; then
-        if [ -d "${QMK_HOME}/users/${QMK_USER}" ]; then
+    fi
+
+    if [[ $1 < 1 ]]; then
+        if [ -d "${qmk_home}/users/${qmk_user}" ]; then
             echo "Userspace needs to be deleted before ditto is run to prevent orphaned files."
-            rm -rf ${QMK_HOME}/users/${QMK_USER}
-            if [ ! -d "${QMK_HOME}/users/${QMK_USER}" ]; then
+            rm -rf ${qmk_home}/users/${qmk_user}
+            if [ ! -d "${qmk_home}/users/${qmk_user}" ]; then
                 echo "Deleted the user folder for overwrite"
             fi
         fi
-        mkdir $QMK_HOME/users/$QMK_USER
-        ditto users/$QMK_USER $QMK_HOME/users/$QMK_USER
-        # If the assumption mentioned in the definition of QMK_USER doesn't apply to you, change this:
-        if [ -f "${QMK_HOME}/users/${QMK_USER}/${QMK_USER}.c" ]; then
-            unset -f SHOULD_COPY_USER
+        mkdir $qmk_home/users/$qmk_user
+        ditto users/$qmk_user $qmk_home/users/$qmk_user
+        # If the assumption mentioned in the definition of qmk_user doesn't apply to you, change this:
+        if [ -f "${qmk_home}/users/${qmk_user}/${qmk_user}.c" ]; then
+            should_copy_user="false"
             echo "Copied user directory from source."
         fi
     fi
-
-    if [ -f "${QMK_HOME}/layouts/community/${KEYBOARD}/${QMK_USER}/keymap.c" ]; then
+    echo "------------------------------------"
+    echo "- Now Copying Layout: ${layouts[$1]}"
+    echo "------------------------------------"
+    if [ -f "${qmk_home}/layouts/community/${layouts[$1]}/${qmk_user}/keymap.c" ]; then
         echo "Removing existing files at keymap path to prevent orphans."
-        rm -rf $QMK_HOME/layouts/community/$KEYBOARD/$QMK_USER
+        rm -rf $qmk_home/layouts/community/${layouts[$1]}/$qmk_user
     fi
-    mkdir $QMK_HOME/layouts/community/$KEYBOARD/$QMK_USER
-    ditto layouts/community/$KEYBOARD/$QMK_USER $QMK_HOME/layouts/community/$KEYBOARD/$QMK_USER
-    if [ -f "${QMK_HOME}/layouts/community/${KEYBOARD}/${QMK_USER}/keymap.c" ]; then
+    mkdir $qmk_home/layouts/community/${layouts[$1]}/$qmk_user
+    ditto layouts/community/${layouts[$1]}/$qmk_user $qmk_home/layouts/community/${layouts[$1]}/$qmk_user
+    if [ -f "${qmk_home}/layouts/community/${layouts[$1]}/${qmk_user}/keymap.c" ]; then
         echo "Successfully copied keymap from source"
     fi
 }
@@ -103,28 +108,26 @@ copy_layout()
 #   ./pipeline --threads ${allThreads[$i]}
 # done
 if [ -z "$1" ]; then
-    for k in ${!KEYBOARDS[@]}; do
-        copy_layout ${KEYBOARDS[$k]}
-        if [[ SHOULD_COMPILE == true ]]; then
-            qmk compile -kb ${LAYOUTS[$k]}
+    for k in ${!keyboards[@]}; do
+        copy_layout $k
+        if [[ $should_compile == "true" ]]; then
+            echo "Compiling....."
+            qmk compile -kb ${keyboards[$k]} -km ${qmk_user}
         fi
     done
-fi
-if [ -z "$1" ]; then
-    copy_layout ergodox
-    copy_layout ortho_4x12
-    if [[ SHOULD_COMPILE == true ]]; then
-        qmk compile -kb ergodox_ez
-        qmk compile -kb planck/ez
-    fi
-elif [[ "$1" == *"ergodox"* ]]; then
-    copy_layout ergodox
-    if [[ SHOULD_COMPILE == true ]]; then
-        qmk compile -kb ergodox_ez
-    fi
-elif [[ "$1" == *"planck"* ]]; then
-    copy_layout ortho_4x12
-    if [[ SHOULD_COMPILE == true ]]; then
-        qmk compile -kb planck/ez
-    fi
+else
+    echo "Found parameter $1"
+    for k in ${!keyboards[@]}; do
+        echo "Checking ${keyboards[$k]}"
+        if [[ -z $1 ]]; then
+            continue
+        elif [[ "${keyboards[$k]}" == *"$1"* ]]; then
+            echo "Found match for $1 in: ${keyboards[$k]}"
+            copy_layout $k
+            if [[ $should_compile == "true" ]]; then
+                qmk compile -kb ${keyboards[$k]} -km ${qmk_user}
+            fi
+            shift
+        fi
+    done
 fi
