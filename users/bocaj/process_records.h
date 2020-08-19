@@ -7,16 +7,12 @@
 #    define PLACEHOLDER_SAFE_RANGE SAFE_RANGE
 #endif
 
-// _WORKMAN = 0,
-//     _QWERTY,
-//     _COLEMAK,
-//     _DVORAK
 enum userspace_custom_keycodes {
     VRSN = PLACEHOLDER_SAFE_RANGE,  // Prints QMK Firmware and board info
     KC_WORKMAN,                     // Sets default layer to WORKMAN
     KC_QWERTY,                      // Sets default layer to QWERTY
-    KC_COLEMAK,                     // Sets default layer to COLEMAK
-    KC_DVORAK,                      // Sets default layer to DVORAK
+    // KC_COLEMAK,                     // Sets default layer to COLEMAK
+    // KC_DVORAK,                      // Sets default layer to DVORAK
     KC_MAKE,                        // Run keyboard's customized make command
     KC_RGB_T,                       // Toggles RGB Layer Indication mode
     RGB_IDL,                        // RGB Idling animations
@@ -35,8 +31,8 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record);
 #define MO_MSE  MO(_MOUSE)
 
 #define QWERTY  KC_QWERTY
-#define DVORAK  KC_DVORAK
-#define COLEMAK KC_COLEMAK
+// #define DVORAK  KC_DVORAK
+// #define COLEMAK KC_COLEMAK
 #define WORKMAN KC_WORKMAN
 
 #define KC_RST   RESET

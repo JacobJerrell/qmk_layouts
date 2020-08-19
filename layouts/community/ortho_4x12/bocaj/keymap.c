@@ -173,12 +173,12 @@ void rgb_matrix_indicators_user(void) {
                     case _QWERTY:
                         rgb_matrix_layer_helper(HSV_CYAN, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
                         break;
-                    case _COLEMAK:
-                        rgb_matrix_layer_helper(HSV_MAGENTA, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
-                        break;
-                    case _DVORAK:
-                        rgb_matrix_layer_helper(HSV_SPRINGGREEN, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
-                        break;
+                    // case _COLEMAK:
+                    //     rgb_matrix_layer_helper(HSV_MAGENTA, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
+                    //     break;
+                    // case _DVORAK:
+                    //     rgb_matrix_layer_helper(HSV_SPRINGGREEN, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
+                    //     break;
                     case _WORKMAN:
                         rgb_matrix_layer_helper(HSV_CORAL, mods_enabled, rgb_matrix_config.speed, LED_FLAG_MODIFIER);
                         break;
@@ -192,12 +192,12 @@ void rgb_matrix_indicators_user(void) {
         case _QWERTY:
             rgb_matrix_set_color(is_ez ? 41 : 42, 0x00, 0xFF, 0xFF);
             break;
-        case _COLEMAK:
-            rgb_matrix_set_color(is_ez ? 41 : 42, 0xFF, 0x00, 0xFF);
-            break;
-        case _DVORAK:
-            rgb_matrix_set_color(is_ez ? 41 : 42, 0x00, 0xFF, 0x00);
-            break;
+        // case _COLEMAK:
+        //     rgb_matrix_set_color(is_ez ? 41 : 42, 0xFF, 0x00, 0xFF);
+        //     break;
+        // case _DVORAK:
+        //     rgb_matrix_set_color(is_ez ? 41 : 42, 0x00, 0xFF, 0x00);
+        //     break;
         case _WORKMAN:
             rgb_matrix_set_color(is_ez ? 41 : 42, 0xD9, 0xA5, 0x21);
             break;

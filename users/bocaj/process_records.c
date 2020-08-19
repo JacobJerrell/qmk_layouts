@@ -17,7 +17,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
     ) {
         switch (keycode) {
-            case KC_WORKMAN ... KC_DVORAK:
+            case KC_WORKMAN ... KC_QWERTY:
                 if (record->event.pressed) {
                     uint8_t mods = mod_config(get_mods() | get_oneshot_mods());
                     if (!mods) {

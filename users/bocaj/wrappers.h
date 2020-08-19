@@ -126,7 +126,7 @@ NOTE: These are all the same length.  If you do a search/replace
 #define _________________ADJUST_L3_________________       RGB_RMOD, RGB_HUD,     RGB_SAD,   RGB_VAD, KC_RGB_T
 
 #define _________________ADJUST_R1_________________       ___________________BLANK___________________
-#define _________________ADJUST_R2_________________       CG_SWAP, WORKMAN, QWERTY,  COLEMAK, DVORAK
+#define _________________ADJUST_R2_________________       CG_SWAP, WORKMAN, QWERTY,  _______, _______
 #define _________________ADJUST_R3_________________       MU_TOG , CK_TOGG, AU_ON,   AU_OFF,  CG_NORM
 
 // clang-format on
