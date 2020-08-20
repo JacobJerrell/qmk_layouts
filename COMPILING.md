@@ -4,8 +4,7 @@
 
 First, follow the [QMK Setup Guide](https://docs.qmk.fm/#/newbs_getting_started)
 
-To test, restart your terminal and do the following:
-
+Now wait for me to finish... lol
 
 # Compiling (Old Version)
 
