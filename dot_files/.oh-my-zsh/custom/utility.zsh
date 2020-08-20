@@ -19,11 +19,6 @@ cdp () {
 	cd ~/Projects/Avenel/iOS/$1
 }
 
-# Shortcut to Personal projects
-cdpp () {
-	cd /Users/j792280/Library/Mobile\ Documents/com~apple~CloudDocs/Documents/Projects/$1
-}
-
 # While in the root of a Lutra repo, open the workspace file in the default program (XCode)
 openp () {
 	open Lutra/Lutra.xcworkspace

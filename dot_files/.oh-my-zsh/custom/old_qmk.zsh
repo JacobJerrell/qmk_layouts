@@ -54,7 +54,7 @@ qmkbak() {
     fi
 }
 
-qmkws () {
+old_qmkws () {
     if [ "$1" != "compile" ]
     then
         echo "Usage:"
