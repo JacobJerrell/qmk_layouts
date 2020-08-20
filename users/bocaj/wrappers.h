@@ -58,7 +58,7 @@ expanded before being used as arguments to the LAYOUT_xxx macro.
     KC_ESC,  K01,     K02,   K03,     K04,        K05,        K06,  K07,      K08,      K09,     K0A,     KC_MINS, \
     KC_TAB,  K11,     K12,   K13,     K14,  ALL_T(K15), MEH_T(K16), K17,      K18,      K19,     K1A,     KC_QUOT, \
     KC_LSFT, K21,     K22,   K23,     K24,        K25,        K26,  K27,      K28,      K29,     K2A,     KC_TRNS, \
-    MO_MSE,  KC_LEAD, KC_UP, KC_LEFT, KC_BSPC,         KC_SPC,      KC_ENTER, KC_RIGHT, KC_DOWN, KC_TRNS, KC_TRNS  \
+    MO_MSE,  KC_LEAD, KC_UP, KC_LEFT, KC_BSPC,         KC_SPC,      KC_ENTER, KC_LEFT,  KC_DOWN, KC_UP,   KC_RIGHT \
   )
 
 /*
@@ -113,12 +113,20 @@ NOTE: These are all the same length.  If you do a search/replace
 #define ___________________BLANK___________________       _______, _______, _______, _______, _______
 #define _________________UNDEFINED_________________       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 
-#define _________________RAISE_L1__________________       ________________NUMBER_LEFT________________
-#define _________________RAISE_L2__________________       KC_EXLM, KC_AT,   KC_HASH, KC_DLR, KC_PERC
+#define _________________LOWER_L1__________________       ________________NUMBER_LEFT________________
+#define _________________LOWER_L2__________________       ___________________BLANK___________________
+#define _________________LOWER_L3__________________       ___________________BLANK___________________
+
+#define _________________LOWER_R1__________________       ________________NUMBER_RIGHT_______________
+#define _________________LOWER_R2__________________       ___________________BLANK___________________
+#define _________________LOWER_R3__________________       ___________________BLANK___________________
+
+#define _________________RAISE_L1__________________       KC_EXLM, KC_AT,   KC_HASH, KC_DLR, KC_PERC
+#define _________________RAISE_L2__________________       _________________FUNC_LEFT_________________
 #define _________________RAISE_L3__________________       ___________________BLANK___________________
 
-#define _________________RAISE_R1__________________       ________________NUMBER_RIGHT_______________
-#define _________________RAISE_R2__________________       KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN
+#define _________________RAISE_R1__________________       KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN
+#define _________________RAISE_R2__________________       _________________FUNC_RIGHT________________
 #define _________________RAISE_R3__________________       ___________________BLANK___________________
 
 #define _________________ADJUST_L1_________________       RGB_MOD,  RGB_HUI,     RGB_SAI,   RGB_VAI, RGB_TOG
@@ -126,7 +134,7 @@ NOTE: These are all the same length.  If you do a search/replace
 #define _________________ADJUST_L3_________________       RGB_RMOD, RGB_HUD,     RGB_SAD,   RGB_VAD, KC_RGB_T
 
 #define _________________ADJUST_R1_________________       ___________________BLANK___________________
-#define _________________ADJUST_R2_________________       CG_SWAP, WORKMAN, QWERTY,  COLEMAK, DVORAK
+#define _________________ADJUST_R2_________________       CG_SWAP, WORKMAN, QWERTY,  _______, _______
 #define _________________ADJUST_R3_________________       MU_TOG , CK_TOGG, AU_ON,   AU_OFF,  CG_NORM
 
 // clang-format on

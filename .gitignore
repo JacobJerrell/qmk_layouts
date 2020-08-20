@@ -5,3 +5,10 @@ default/
 secrets.*
 .DS_Store
 .vscode/
+
+# Don't track build backups
+*.bin
+*.hex
+
+# Only commit the example so I can stop overwriting when I switch machines -.-
+/tools/qmkws.cfg

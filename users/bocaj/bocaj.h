@@ -31,9 +31,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 enum userspace_layers {
     _WORKMAN = 0,
     _QWERTY,
-    _COLEMAK,
-    _DVORAK,
-    _MACROS,
+    // _COLEMAK,
+    // _DVORAK,
+    // _MACROS,
     _LOWER,
     _MOUSE,
     _RAISE,

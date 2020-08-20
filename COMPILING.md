@@ -1,18 +1,13 @@
-# Compiling V2
+# Compiling V2 \*WIP*
 
-First, follow the [QMK Setup Guide](https://docs.qmk.fm/#/newbs_getting_started). When that finishes you will need to set your QMK_HOME environment variable if `cd $QMK_HOME` doesn't already take you to it. In example:
+> Insert mid-90's webpage under construction pics here... preferrably in .bmp
 
-`export QMK_HOME='/Users/bocaj/Projects/qmk/qmk_firmware/'`
+First, follow the [QMK Setup Guide](https://docs.qmk.fm/#/newbs_getting_started)
 
-Testing:
+To test, restart your terminal and do the following:
 
-```bash
-$ cd $QMK_HOME
-$ pwd
-/Users/bocaj/Projects/qmk/qmk_firmware
-```
 
-# Compiling (Old Versio)
+# Compiling (Old Version)
 
 The firmware can be compiled easily via the following function in .zshrc or whatever similar file you choose to use. Being sure to add the correct paths for your setup.
 
