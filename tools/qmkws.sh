@@ -1,9 +1,4 @@
-if [ -f "qmkws.cfg" ]; then
 source qmkws.cfg
-else
-echo "Fatal Error: Could not locate config file. Please setup qmkws.cfg. This repo should have included an example."
-exit 127
-fi
 
 ############################################
 # **WARNING**
@@ -81,19 +76,18 @@ copy_layout()
     fi
 }
 
-# for t in ${allThreads[@]}; do
-#   ./pipeline --threads $t
-# done
-
-# for i in ${!allThreads[@]}; do
-#   ./pipeline --threads ${allThreads[$i]}
-# done
+ws_compile()
+{
+    echo "-------------------------"
+    echo "- Compiling ${1}..."
+    echo "-------------------------"
+    qmk compile -kb $1 -km $2
+}
 if [ -z "$1" ]; then
     for k in ${!keyboards[@]}; do
         copy_layout $k
         if [[ $should_compile == "true" ]]; then
-            echo "Compiling....."
-            qmk compile -kb ${keyboards[$k]} -km ${qmk_user}
+            ws_compile ${keyboards[$k]} ${qmk_user}
         fi
     done
 else
@@ -106,7 +100,7 @@ else
             echo "Found match for $1 in: ${keyboards[$k]}"
             copy_layout $k
             if [[ $should_compile == "true" ]]; then
-                qmk compile -kb ${keyboards[$k]} -km ${qmk_user}
+                ws_compile ${keyboards[$k]} ${qmk_user}
             fi
             shift
         fi
