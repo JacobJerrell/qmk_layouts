@@ -16,7 +16,6 @@ enum userspace_custom_keycodes {
     KC_MAKE,                        // Run keyboard's customized make command
     KC_RGB_T,                       // Toggles RGB Layer Indication mode
     RGB_IDL,                        // RGB Idling animations
-    MC_LOCK,                        // Locks the Mac
     MC_ARRW,                        // ->
     UC_FLIP,                        // (ಠ痊ಠ)┻━┻
     UC_TABL,                        // ┬─┬ノ( º _ ºノ)
@@ -28,12 +27,15 @@ enum userspace_custom_keycodes {
 bool process_record_secrets(uint16_t keycode, keyrecord_t *record);
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record);
 
-#define MO_MSE  MO(_MOUSE)
+#define MO_MOD  MO(_MOD)
+#define TT_MOD  TT(_MOD)
 
 #define QWERTY  KC_QWERTY
 // #define DVORAK  KC_DVORAK
 // #define COLEMAK KC_COLEMAK
 #define WORKMAN KC_WORKMAN
+
+#define KC_ARRW MC_ARRW
 
 #define KC_RST   RESET
 

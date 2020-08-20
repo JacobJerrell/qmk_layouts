@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "version.h"
 #include "eeprom.h"
-#include "wrappers.h"
 #include "process_records.h"
+#include "wrappers.h"
 #if defined(RGB_MATRIX_ENABLE)
 #    include "rgb_matrix_stuff.h"
 #endif
@@ -33,11 +33,10 @@ enum userspace_layers {
     _QWERTY,
     // _COLEMAK,
     // _DVORAK,
-    // _MACROS,
     _LOWER,
-    _MOUSE,
     _RAISE,
     _ADJUST,
+    _MOD,
     LAYER_SAFE_RANGE,
 };
 

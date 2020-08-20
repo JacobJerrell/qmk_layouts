@@ -53,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     // Wrapping Mouse-Wheel Keys with `X_T()` style functions seems
     // to break the mouse button. So we can't use the wrapper here.
-    [_MOUSE] = LAYOUT_ergodox_pretty(
+    [_MOD] = LAYOUT_ergodox_pretty(
         _______, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO, _______,           _______, KC_NO,   KC_NO,   KC_NO,     KC_NO,   KC_NO, _______,
         _______, KC_NO, KC_NO,   KC_WH_D, KC_NO,   KC_NO, _______,           _______, KC_NO,   KC_NO,   KC_MS_U,   KC_NO,   KC_NO, _______,
         _______, KC_NO, KC_WH_L, KC_WH_U, KC_WH_R, KC_NO,                             KC_NO,   KC_MS_L, KC_MS_D,   KC_MS_R, KC_NO, _______,
