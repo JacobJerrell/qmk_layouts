@@ -1,9 +1,21 @@
-# Compiling V2 -WIP-
+# Compiling
 
 - [Requirements](#requirements)
 - [Setup](#setup)
 - [Usage](#usage)
 - [TODO](#todo)
+
+## Foreword
+
+Although your userspace/layouts could originate from this project, this guide assumes that you've already begun your keyboard development.
+
+
+
+i. If you've not than I would suggest browsing qmk_firmware/keyboards/{your_keyboard}/default/
+ii. or more generically (in the case of variations of the same matrix)  layouts/default/{your_grid_definition}/
+iii. From there, look to the community shared layouts and user spaces for vast inspiration.
+iv. I also like to explore the relevant QMK_KEYBOARD.c/h files in the keyboards/{your_keyboard} path
+v. Refer to the fantastic [QMK Firmware Documentation](https://docs.qmk.fm/)
 
 ## Requirements
 
@@ -18,7 +30,7 @@
 
 ## Setup
 
-1. Follow the [QMK Setup Guide](https://docs.qmk.fm/#/newbs_getting_started)
+1. Follow the [QMK Setup Guide](https://docs.qmk.fm/#/newbs_getting_started) if applicable
 2. Copy your userspace from qmk_firmware/users/ to qmk_workspace/users/
 3. Copy your layout(s) from qmk_firmware/layouts/{Your Keyboard(s)}/ to qmk_workspace/layouts/{Your Keyboard(s)}/
 4. Make a copy of qmkws.cfg.example and name it qmkws.cfg
@@ -49,7 +61,7 @@ $ ./qmkws.sh planck
 $ ./qmkws.sh compile planck
 ```
 
-# TODO
+## TODO
 
 - [ ] Copy and rename compiled files to the qmk_workspace path
   - [ ] Naming convention: `{KEYBOARD}-{MM-dd-YYTHH:mm:ss}.*`
