@@ -6,9 +6,9 @@ Since our quirky block definitions are basically a list of comma separated
 arguments, we need a wrapper in order for these definitions to be
 expanded before being used as arguments to the LAYOUT_xxx macro.
 */
-// #if (!defined(LAYOUT) && defined(KEYMAP))
-// #    define LAYOUT KEYMAP
-// #endif
+#if (!defined(LAYOUT) && defined(KEYMAP))
+#    define LAYOUT KEYMAP
+#endif
 
 // clang-format off
 #define WRAPPER_ergodox_pretty(...)          LAYOUT_ergodox_pretty(__VA_ARGS__)
@@ -114,11 +114,11 @@ NOTE: These are all the same length.  If you do a search/replace
 #define _________________UNDEFINED_________________       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 
 #define _________________LOWER_L1__________________       ________________NUMBER_LEFT________________
-#define _________________LOWER_L2__________________       _______, _______, _______, KC_ARRW, KC_LPRN
-#define _________________LOWER_L3__________________       _______, _______, _______, _______, KC_LBRC
+#define _________________LOWER_L2__________________       _______, _______, _______, _______, KC_LPRN
+#define _________________LOWER_L3__________________       _______, _______, _______, KC_ARRW, KC_LBRC
 
 #define _________________LOWER_R1__________________       ________________NUMBER_RIGHT_______________
-#define _________________LOWER_R2__________________       KC_RPRN, _______, _______, KC_RSFT, _______
+#define _________________LOWER_R2__________________       KC_RPRN, _______, _______, _______, _______
 #define _________________LOWER_R3__________________       KC_RBRC, _______, _______, _______, _______
 
 #define _________________RAISE_L1__________________       KC_EXLM, KC_AT,   KC_HASH, KC_DLR, KC_PERC
