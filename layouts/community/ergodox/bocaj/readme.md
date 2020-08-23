@@ -1,25 +1,28 @@
-Overview
-========
+# Overview
 
 This is my personal Ergodox EZ configuration, and my daily driver.
 
-Most of the code resides in my userspace, rather than here, as I have multiple keyboards.
+Most of the code resides in my userspace and is heavily based upon [Drashna's work](https://github.com/qmk/qmk_firmware/tree/master/users/drashna)... although considerably slimmed down.
 
-How to build 
-------------
-make ergodox_ez:drashna:teensy
+## How to build
 
-Layers
-------
-* QWERTY/DVORAK/COLEMAK/WORKMAN: basic layout, default set like the OLKB boards. Default is set and persists on power cycle.
-* SYMB: F keys across the top, symbols on the left and numpad on the right.
-* GAMEPAD: This is the QWERTY layout shifted to the right for FPS type games. Destiny and Overwatch are the primary games for this.
-* DIABLO: This contains a Diablo 3 layout, that requires much less reaching or shifting. If Tap Dance is enabled, then it has a "spam" feature. See Userspace for details.
-* MOUSE: mouse navigation
+Put simply:
+`make ergodox_ez:bocaj`
 
-All layers have RGB specific indicators, so you can see what layer you're on by the underglow.
+On that note, I use a separate workspace when making changes to my layouts or userspace. In that repo, there is a tool that does this for me. See [JacobJerrell/qmk_layouts/tools/](https://github.com/JacobJerrell/qmk_layouts/tree/master/tools)
 
-Ergodox Specific Code
----------------------
+## Layers
 
-Aside from my userspace code, this includes LED indications for Shift (Green LED), Ctrl (Red LED), and Alt (Blue LED).
+* WORKMAN: No one uses this board but me and I've never had a reason to switch to QWERTY
+* LOWER:
+  * Left: Grave and navigation arrows
+  * Right: Numpad
+* RAISE:
+  * Symbols across the top, F-Keys on the second row
+* ADJUST
+  * Audio control, make/reset/version macros
+* MOD: mouse navigation
+
+## Ergodox Specifics
+
+I don't have the underglow or backlit versions so the 3 LEDs on the right board are used for layer indication if not on the base layer. If you're on the base layer, they're used for mod-key indicators.

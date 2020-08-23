@@ -1,14 +1,12 @@
 #include "bocaj.h"
 #include <print.h>
 
-uint16_t copy_paste_timer;
-
 __attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *record) { return true; }
 
 __attribute__((weak)) bool process_record_secrets(uint16_t keycode, keyrecord_t *record) { return true; }
 
 // Defines actions tor my global custom keycodes. Defined in bocaj.h file
-// Then runs the _keymap's record handier if not processed here
+// Then runs the _keymap's record handler if not processed here
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     if (process_record_keymap(keycode, record) && process_record_secrets(keycode, record)
@@ -30,16 +28,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 break;
 
-            case MC_LOCK:
-                if (!record->event.pressed) {
-                    layer_move(0);
-                    tap_code16(LCTL(LGUI(KC_Q)));
-                }
-                break;
-
             case MC_ARRW:
                 if (!record->event.pressed) {
-                    SEND_STRING("->");
+                    clear_mods();
+                    send_string_with_delay_P(PSTR("->"), TAP_CODE_DELAY);
                 }
                 break;
 

@@ -1,5 +1,5 @@
 /*
-Copyright 2017 Christopher Courtney <drashna@live.com> @drashna
+Copyright 2020 Jacob Jerrell <jacob.jerrell@gmail.com> @JacobJerrell	
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

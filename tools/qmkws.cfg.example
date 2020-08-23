@@ -6,7 +6,7 @@
 # The path to your qmk firmware folder
 qmk_firmware="/Users/username/qmk_firmware"
 
-# The path to your workspace folder
+# The path to your workspace folder (this project)
 qmk_workspace="/Users/username/qmk_workspace"
 
 # Note
@@ -19,6 +19,7 @@ qmk_user="user"
 # Note: This is the `-kb` parameter in the `qmk compile` command
 # Note: If for example you have two of the same keyboard with different revisions, 
 #    you would need to duplicate the relevant entry in the layouts definition below.
+#       This would probably reveal a bug after given more thought.
 # Note: I'm open to suggestions. I'm learning bash scripting as I go. I'm thinking a dictionary 
 #    setup (e.g. [String: [String]] i.e `[layout: [keyboards]]`) that at least to
 #    some degree automatically maintains the pairs by scanning qmk_firmware for changes.

@@ -6,9 +6,9 @@ Since our quirky block definitions are basically a list of comma separated
 arguments, we need a wrapper in order for these definitions to be
 expanded before being used as arguments to the LAYOUT_xxx macro.
 */
-// #if (!defined(LAYOUT) && defined(KEYMAP))
-// #    define LAYOUT KEYMAP
-// #endif
+#if (!defined(LAYOUT) && defined(KEYMAP))
+#    define LAYOUT KEYMAP
+#endif
 
 // clang-format off
 #define WRAPPER_ergodox_pretty(...)          LAYOUT_ergodox_pretty(__VA_ARGS__)
@@ -57,8 +57,8 @@ expanded before being used as arguments to the LAYOUT_xxx macro.
   WRAPPER_planck_bocaj( \
     KC_ESC,  K01,     K02,   K03,     K04,        K05,        K06,  K07,      K08,      K09,     K0A,     KC_MINS, \
     KC_TAB,  K11,     K12,   K13,     K14,  ALL_T(K15), MEH_T(K16), K17,      K18,      K19,     K1A,     KC_QUOT, \
-    KC_LSFT, K21,     K22,   K23,     K24,        K25,        K26,  K27,      K28,      K29,     K2A,     KC_TRNS, \
-    MO_MSE,  KC_LEAD, KC_UP, KC_LEFT, KC_BSPC,         KC_SPC,      KC_ENTER, KC_LEFT,  KC_DOWN, KC_UP,   KC_RIGHT \
+    KC_LSFT, K21,     K22,   K23,     K24,        K25,        K26,  K27,      K28,      K29,     K2A,     TT_MOD,  \
+    MO_MOD,  KC_LEAD, KC_UP, KC_LEFT, KC_BSPC,         KC_SPC,      KC_ENTER, KC_RIGHT, KC_DOWN, KC_TRNS, KC_TRNS  \
   )
 
 /*
@@ -114,12 +114,12 @@ NOTE: These are all the same length.  If you do a search/replace
 #define _________________UNDEFINED_________________       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 
 #define _________________LOWER_L1__________________       ________________NUMBER_LEFT________________
-#define _________________LOWER_L2__________________       ___________________BLANK___________________
-#define _________________LOWER_L3__________________       ___________________BLANK___________________
+#define _________________LOWER_L2__________________       _______, _______, _______, _______, KC_LPRN
+#define _________________LOWER_L3__________________       _______, _______, _______, KC_ARRW, KC_LBRC
 
 #define _________________LOWER_R1__________________       ________________NUMBER_RIGHT_______________
-#define _________________LOWER_R2__________________       ___________________BLANK___________________
-#define _________________LOWER_R3__________________       ___________________BLANK___________________
+#define _________________LOWER_R2__________________       KC_RPRN, _______, _______, _______, _______
+#define _________________LOWER_R3__________________       KC_RBRC, _______, _______, _______, _______
 
 #define _________________RAISE_L1__________________       KC_EXLM, KC_AT,   KC_HASH, KC_DLR, KC_PERC
 #define _________________RAISE_L2__________________       _________________FUNC_LEFT_________________
@@ -130,7 +130,7 @@ NOTE: These are all the same length.  If you do a search/replace
 #define _________________RAISE_R3__________________       ___________________BLANK___________________
 
 #define _________________ADJUST_L1_________________       RGB_MOD,  RGB_HUI,     RGB_SAI,   RGB_VAI, RGB_TOG
-#define _________________ADJUST_L2_________________       KC__MUTE, KC__VOLDOWN, KC__VOLUP, MC_LOCK, KC_MNXT
+#define _________________ADJUST_L2_________________       KC__MUTE, KC__VOLDOWN, KC__VOLUP, _______, KC_MNXT
 #define _________________ADJUST_L3_________________       RGB_RMOD, RGB_HUD,     RGB_SAD,   RGB_VAD, KC_RGB_T
 
 #define _________________ADJUST_R1_________________       ___________________BLANK___________________

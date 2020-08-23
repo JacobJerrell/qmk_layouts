@@ -1,108 +1,153 @@
 source qmkws.cfg
 
-############################################
-# **WARNING**
-# You shouldn't need to edit below this line
-############################################
-test_file="quantum/api.c"
+# Default behavior that can be modified via arguments
+should_compile="false"
+debug="false"
+verbose="false"
 
-if [[ "$1" == "compile" ]]; then
-    should_compile="true"
-    echo "Should be compiling"
-    shift
-else
-    should_compile="false"
+# Thus far, all used commands support `-v` so a global var is fine
+verbose_string=""
+
+# Set and define debug procedures
+debug_msg()
+{
+    if [[ -z "$1" ]]; then
+        return 0
+    elif [[ "$1" == "fatal" ]]; then
+        shift
+        printf '###### Fatal Error ######\n%s\n' "$1"
+        exit 1
+    elif [[ "$1" == "info" ]]; then
+        shift
+        printf 'INFO ::  %s\n' "$1"
+    elif [[ ("$1" == "--debugHeader" && "${debug}" == "true") || "$1" == "header" ]]; then
+        shift
+        printf "\n%${#1}s####\n" |tr " " "#"
+        printf '# %s #\n' "$1"
+        printf "%${#1}s####\n\n" |tr " " "#"
+    elif [[ "${debug}" == "true" ]]; then
+        printf 'DEBUG :: %s\n' "$1"
+    fi
+}
+
+# Option handling
+for arg
+do
+    case "$arg" in
+        -d) debug="true"
+            shift
+            ;;
+        -v|--verbose) verbose="true"
+            verbose_string="-v"
+            shift
+            ;;
+        -c|--compile) 
+            should_compile="true"
+            shift
+            ;;
+        -*) debug_msg fatal "Unknown Argument: $arg"
+            ;;
+        # *)
+        #     debug_msg "Wildcard Match for Argument: $1"
+        #     continue
+        #     ;;
+     esac
+done
+
+debug_msg "Debug Messages Enabled"
+debug_msg "Passing $# unparsed arguments"
+if [[ "${debug}" == "true" ]]; then
+    for arg
+    do
+        debug_msg "Argument #$i: "${arg[i]}""
+    done
 fi
 
-# Validate build environment 
+
+# Validate environment 
+test_file="quantum/api.c"
 if [ -d "${qmk_firmware}" ]; then
     if [[ ! -r "${qmk_firmware}/${test_file}" ]]; then
-        echo "Fatal Error: Firmware does not appear to exist at ${qmk_firmware}.
+        debug_msg fatal "Firmware does not appear to exist at ${qmk_firmware}.
         - Check your configuration by editing the ``qmkws.sh`` file
         - Otherwise, you may need to clone and setup QMK first. Link: https://docs.qmk.fm/#/newbs_getting_started"
-        exit 127 # Possible PATH issue
     else
-        echo "Firmware Path: ${qmk_firmware}"
+        debug_msg info "Firmware Path: ${qmk_firmware}"
     fi
 fi
 
 if [[ ! qmk && should_compile == "true" ]]; then
-    echo "Fatal Error: You need to setup QMK first. Link: https://docs.qmk.fm/#/newbs_getting_started?id=set-up-qmk"
-    exit 126 # Cannot invoke required command
+    debug_msg fatal "You need to setup QMK first. Link: https://docs.qmk.fm/#/newbs_getting_started?id=set-up-qmk"
 fi
 
 if [[ ! ditto ]]; then
-    echo "Fatal Error: Command \"ditto\" must be available in \$PATH"
-    exit 126 # Cannot invoke required command
+    debug_msg fatal "Command \"ditto\" must be available in \$PATH. I believe it exists by default on MacOS"
 fi
+
 
 should_copy_user="true"
 
 copy_layout()
 {
-    # copy_layout ${keyboards[$k]}
+    debug_msg --debugHeader "Now Copying Layout: ${layouts[$1]}"
     if [ ! -d "${qmk_firmware}/keyboards/${keyboards[$1]}" ]; then
-        echo "Keyboard does not exist at: ${qmk_firmware}/keyboards/${keyboards[$1]}"
-        exit 127 # Possible PATH issue
+        debug_msg fatal "Keyboard does not exist at: ${qmk_firmware}/keyboards/${keyboards[$1]}"
     fi
 
-    if [[ $1 < 1 ]]; then
+    # if [[ $1 < 1 ]]; then
+    if [[ "${should_copy_user}" == "true" ]]; then
         if [ -d "${qmk_firmware}/users/${qmk_user}" ]; then
-            echo "Userspace needs to be deleted before ditto is run to prevent orphaned files."
-            rm -rf ${qmk_firmware}/users/${qmk_user}
+            debug_msg "Userspace needs to be deleted before ditto is run to prevent orphaned files."
+            rm -rf ${verbose_string} ${qmk_firmware}/users/${qmk_user}
             if [ ! -d "${qmk_firmware}/users/${qmk_user}" ]; then
-                echo "Deleted the user folder for overwrite"
+                debug_msg "Deleted the user folder for overwrite"
             fi
         fi
         mkdir $qmk_firmware/users/$qmk_user
-        ditto $qmk_workspace/users/$qmk_user $qmk_firmware/users/$qmk_user
+        ditto $verbose_string $qmk_workspace/users/$qmk_user $qmk_firmware/users/$qmk_user
         # If the assumption mentioned in the definition of qmk_user doesn't apply to you, change this:
         if [ -f "${qmk_firmware}/users/${qmk_user}/${qmk_user}.c" ]; then
             should_copy_user="false"
-            echo "Copied user directory from source."
+            debug_msg info "Copied user directory for \"$qmk_user\" from workspace"
         fi
     fi
-    echo "------------------------------------"
-    echo "- Now Copying Layout: ${layouts[$1]}"
-    echo "------------------------------------"
     if [ -f "${qmk_firmware}/layouts/community/${layouts[$1]}/${qmk_user}/keymap.c" ]; then
-        echo "Removing existing files at keymap path to prevent orphans."
-        rm -rf $qmk_firmware/layouts/community/${layouts[$1]}/$qmk_user
+        debug_msg "Removing existing files at keymap path to prevent orphans."
+        rm -rf $verbose_string $qmk_firmware/layouts/community/${layouts[$1]}/$qmk_user
     fi
-    mkdir $qmk_firmware/layouts/community/${layouts[$1]}/$qmk_user
-    ditto $qmk_workspace/layouts/community/${layouts[$1]}/$qmk_user $qmk_firmware/layouts/community/${layouts[$1]}/$qmk_user
+    mkdir -pv $qmk_firmware/layouts/community/${layouts[$1]}/$qmk_user
+    ditto $verbose_string $qmk_workspace/layouts/community/${layouts[$1]}/$qmk_user $qmk_firmware/layouts/community/${layouts[$1]}/$qmk_user
     if [ -f "${qmk_firmware}/layouts/community/${layouts[$1]}/${qmk_user}/keymap.c" ]; then
-        echo "Successfully copied keymap from source"
+        debug_msg info "Successfully copied keymap \"${layouts[$1]}/${qmk_user}\" from workspace."
     fi
 }
 
 ws_compile()
 {
-    echo "-------------------------"
-    echo "- Compiling ${1}..."
-    echo "-------------------------"
-    qmk compile -kb $1 -km $2
+    if [[ $should_compile != "true" ]]; then
+        return 0
+    elif [[ -d "${qmk_firmware}/layouts/community/${layouts[$3]}" && -d "${qmk_firmware}/keyboards/$1" ]]; then
+        debug_msg header "Compiling $1..."
+        qmk compile -kb $1 -km $2
+    fi
 }
-if [ -z "$1" ]; then
+
+ws_run()
+{
     for k in ${!keyboards[@]}; do
-        copy_layout $k
-        if [[ $should_compile == "true" ]]; then
-            ws_compile ${keyboards[$k]} ${qmk_user}
+        if [[ -z "$1" || "${keyboards[$k]}" == *"$1"* ]]; then
+            copy_layout $k
+            ws_compile ${keyboards[$k]} ${qmk_user} $k
         fi
+
+    done
+}
+
+if [[ ! -z "$1" ]]; then
+    for arg
+    do
+        ws_run $arg
     done
 else
-    echo "Found parameter $1"
-    for k in ${!keyboards[@]}; do
-        echo "Checking ${keyboards[$k]}"
-        if [[ -z $1 ]]; then
-            continue
-        elif [[ "${keyboards[$k]}" == *"$1"* ]]; then
-            echo "Found match for $1 in: ${keyboards[$k]}"
-            copy_layout $k
-            if [[ $should_compile == "true" ]]; then
-                ws_compile ${keyboards[$k]} ${qmk_user}
-            fi
-            shift
-        fi
-    done
+    ws_run
 fi

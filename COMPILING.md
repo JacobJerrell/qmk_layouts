@@ -1,73 +1,72 @@
-# Compiling V2 \*WIP*
+# Compiling
 
-> Insert mid-90's webpage under construction pics here... preferrably in .bmp
+- [Requirements](#requirements)
+- [Setup](#setup)
+- [Usage](#usage)
+- [Todo](#todo)
 
-First, follow the [QMK Setup Guide](https://docs.qmk.fm/#/newbs_getting_started)
+## Foreword
 
-To test, restart your terminal and do the following:
+Although your userspace/layouts could originate from this project, this guide assumes that you've already begun your keyboard development.
 
+i. If you've not than I would suggest browsing qmk_firmware/keyboards/{your_keyboard}/default/
+ii. or more generically (in the case of variations of the same matrix)  layouts/default/{your_grid_definition}/
+iii. From there, look to the community shared layouts and user spaces for vast inspiration.
+iv. I also like to explore the relevant QMK_KEYBOARD.c/h files in the keyboards/{your_keyboard} path
+v. Refer to the fantastic [QMK Firmware Documentation](https://docs.qmk.fm/)
 
-# Compiling (Old Version)
+## Requirements
 
-The firmware can be compiled easily via the following function in .zshrc or whatever similar file you choose to use. Being sure to add the correct paths for your setup.
+- System Requirements
+  - The command `ditto` must be available
+    - Probably MacOS
+- User Requirements
+  - You must be comfortable with a script deleting all of your files in the qmk_firmware path and replacing them with the files in the qmk_layouts path
+        - I'd recommend a backup or at least switch branches in the firmware repo before using this tool.
+        - This software comes with no warranty and is not responsible for any damage that may or may not result from using it
+  - You must be comfortable with the command line, and have a firm understanding for how things work.
 
-```bash
-qmkws () {
-    if [ "$1" != "compile" ]
-    then
-        echo "Usage:"
-        echo "    - \`qmkws compile\` will copy the userspace and both layouts to qmk_firmware and then compile both"
-        echo "    - \`qmkws compile planck\` copies the userspace and the planck layout to qmk_firmware and then compiles the planck/ez layout"
-        echo "    - \`qmkws compile ergodox\` copies the userspace and the ergodox layout to qmk_firmware and then compiles the ergodox_ez layout"
-        return
-    else
-        echo "Creating backups..."
-        # qmkbak
-        echo "Copying workspace files to firmware directory..."
-        ditto ~/qmk_layouts/users/bocaj ~/qmk_firmware/users/bocaj
-        if [ -z "$2" ]
-        then
-            echo "No parameters received. Copying and compiling both layouts..."
-            ditto ~/qmk_layouts/layouts/community/ortho_4x12/bocaj ~/qmk_firmware/layouts/community/ortho_4x12/bocaj
-            qmk compile -kb planck/ez
-            ditto ~/qmk_layouts/layouts/community/ergodox/bocaj ~/qmk_firmware/layouts/community/ergodox/bocaj
-            qmk compile -kb ergodox_ez
-        elif [[ "$2" == *"planck"* ]]
-        then
-            echo "Copying and compiling Planck layout..."
-            ditto ~/qmk_layouts/layouts/community/ortho_4x12/bocaj ~/qmk_firmware/layouts/community/ortho_4x12/bocaj
-            qmk compile -kb planck/ez
-        elif [[ "$2" == *"ergodox"* ]]
-        then
-            echo "Copying and compiling Ergodox layout..."
-            ditto ~/qmk_layouts/layouts/community/ergodox/bocaj ~/qmk_firmware/layouts/community/ergodox/bocaj
-            qmk compile -kb ergodox_ez
-        fi
-        return
-    fi
-}
+## Setup
+
+1. Follow the [QMK Setup Guide](https://docs.qmk.fm/#/newbs_getting_started) if applicable
+2. Copy your userspace from qmk_firmware/users/ to qmk_workspace/users/
+3. Copy your layout(s) from qmk_firmware/layouts/{Your Keyboard(s)}/ to qmk_workspace/layouts/{Your Keyboard(s)}/
+4. Make a copy of qmkws.cfg.example and name it qmkws.cfg
+5. Open qmkws.cfg with a suitable editor and populate it for your environment per the comments and examples
+
+At this point you should be able to run `./qmkws.sh` from the folder the cfg file resides in. Which, given no parameters will overwrite your userspace and each of your layouts in the qmk_firmware path with the corresponding paths in the qmk_workspace path -- creating folders as it goes if necessary.
+
+## Usage
+
+```sh
+# Overwrite your userspace and all configured layouts in the
+# qmk_firmware folder with the matching files in the workspace path
+#
+# Note: This is the core functionality of the script and will occur
+#       at each run, regardless of parameters.
+$ ./qmkws.sh
+
+# Compile each layout after copying it to the firmware folder
+$ ./qmkws.sh compile
+
+# Note: The following commands use a wildcard search of your `keyboards` array.
+#       The search is dual sided; i.e. `dox` would match the ergodox_ez assuming
+#       the default script configuration.
+# Replace your userspace and specific layout (or multiple due to wildcard. Be specific if you must.)
+$ ./qmkws.sh planck
+
+# Compile specific layout
+$ ./qmkws.sh compile planck
 ```
-# Backup
 
-This method is simple but it's incomplete because of lack of interest, time, and frequency of compilations at this stage. If I get a good one I back it up manually
+## TODO
 
-```bash
-qmkbak() {
-    date=$(date '+%Y-%m-%dT%H%M%S')
-    if [ -f "/Users/username/qmk_firmware/planck_ez_bocaj.bin" ]
-    then
-        echo "Creating backup of last planck build"
-        ditto ~/qmk_firmware/planck_ez_bocaj.bin ~/qmk_layouts/backups/$date-planck_ez_bocaj.bin
-    else
-        echo "No recent planck builds found"
-    fi
-
-    if [ -f "/Users/username/qmk_firmware/ergodox_ez_bocaj.hex" ]
-    then
-        echo "Creating backup of last ergodox build"
-        ditto ~/qmk_firmware/ergodox_ez_bocaj.hex ~/qmk_layouts/backups/$date-ergodox_ez_bocaj.hex
-    else
-        echo "No recent ergodox builds found"
-    fi
-}
-```
+- [ ] Copy and rename compiled files to the qmk_workspace path
+  - [ ] Naming convention: `{KEYBOARD}-{MM-dd-YYTHH:mm:ss}.*`
+    - Syntax example from the v1 script: `date=$(date '+%Y-%m-%dT%H%M%S')`
+  - [ ] Copy the previous build to the `backups/` path
+- [ ] Create timestamped backups of compiled files
+  - [ ] Archive after # (days, iterations, user defined?)
+    - [ ] Allow encryption and name the file aptly for .gitignore inclusion
+          It could be unwise to upload your keyboard files depending on your setup
+- [ ] Support more OS's?
