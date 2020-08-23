@@ -3,13 +3,11 @@
 - [Requirements](#requirements)
 - [Setup](#setup)
 - [Usage](#usage)
-- [TODO](#todo)
+- [Todo](#todo)
 
 ## Foreword
 
 Although your userspace/layouts could originate from this project, this guide assumes that you've already begun your keyboard development.
-
-
 
 i. If you've not than I would suggest browsing qmk_firmware/keyboards/{your_keyboard}/default/
 ii. or more generically (in the case of variations of the same matrix)  layouts/default/{your_grid_definition}/
