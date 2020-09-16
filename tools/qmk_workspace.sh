@@ -1,6 +1,6 @@
 #!/bin/bash
-source _utility.sh
-source qmkws.cfg
+. ./_utility.sh
+. ./qmkws.cfg
 
 user_path="users/${qmk_user}"
 layouts_path="layouts/community"
@@ -12,7 +12,6 @@ ws_layouts_dir="${qmk_workspace}/${layouts_path}"
 fw_layouts_dir="${qmk_firmware}/${layouts_path}"
 
 test_file="quantum/api.c"
-should_copy_user=0
 
 _send_msg -h "QMK Workspace Utility"
 
@@ -121,18 +120,18 @@ _clear_dir()
         echo "Unsupported usage of script builtin: `_clear_dir`"
         return 1
     elif [[ ! -d $1 && "$(mkdir -p $1)" ]]; then
-        _send_msg -d "Created dir: $1"
+        _debug_msg "Created dir: $1"
         return 0
     elif [ "$(ls -A $1)" ]; then
         if [ "$(rm -rf $1/*)" ]; then
-            _send_msg -d "Removed contents of: $1"
+            _debug_msg "Removed contents of: $1"
             return 0
         else
             _send_msg -f "Could not clear contents of: $1"
             return 1
         fi
     elif [ -d $1 ]; then
-        _send_msg -d "Found empty directory. No action needed at: $1"
+        _debug_msg "Found empty directory. No action needed at: $1"
         return 0
     fi
 
@@ -147,7 +146,7 @@ _copy_paths()
     destination=$2
 
     if [ "$(_clear_dir $destination)" ]; then
-        _send_msg -d "Attempting to copy \"${source}/\" to \"${destination}\"."
+        _debug_msg "Attempting to copy \"${source}/\" to \"${destination}\"."
         # Copy full tree, preserve meta data
         # The verbose "-v" argument is not advised for use in scripts
         return $(cp -R -p "${source}/" "${destination}")
@@ -162,7 +161,7 @@ _copy_layout()
     ws_keymap_path="${ws_layouts_dir}/${1}/${qmk_user}"
     fw_keymap_path="${fw_layouts_dir}/${1}/${qmk_user}"
     if [ "$(_copy_paths ${fw_keymap_path})" ]; then
-        _send_msg -d "Successfully copied keymap: $1"
+        _debug_msg "Successfully copied keymap: $1"
         return 0
     else
         _send_msg -f "Failed to copy keymap: $1"
@@ -170,7 +169,7 @@ _copy_layout()
     fi
 }
 
-_send_msg -d "Attempting to copy the userspace."
+_debug_msg "Attempting to copy the userspace."
 if [[ $(_copy_paths ${ws_user_dir} ${fw_user_dir}) ]]; then
     if [ ! -f "${fw_user_dir}/${qmk_user}.c" ]; then
         _send_msg -f "Expected file: `${qmk_user}.c` in userspace."
