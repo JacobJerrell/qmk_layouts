@@ -1,3 +1,20 @@
+/*
+Copyright 2020 Jacob Jerrell <jacob.jerrell@gmail.com> @JacobJerrell
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "bocaj.h"
 
 #ifdef BACKLIGHT_ENABLE
@@ -56,17 +73,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_LOWER] = LAYOUT_ortho_4x12_bocaj(
-    KC_GRV,  _________________LOWER_L1__________________, _________________LOWER_R1__________________, KC_EQUAL,
-    KC_DEL,  _________________LOWER_L2__________________, _________________LOWER_R2__________________, KC_BSLS,
-    _______, _________________LOWER_L3__________________, _________________LOWER_R3__________________, _______,
-    _______, _______, _______, _______, _______,     _______,       KC_TAB, _______, _______, _______, _______
+    ___________________LOWER_L1_EXT____________________, ___________________LOWER_R1_EXT____________________,
+    ___________________LOWER_L2_EXT____________________, ___________________LOWER_R2_EXT____________________,
+    ___________________LOWER_L3_EXT____________________, ___________________LOWER_R3_EXT____________________,
+    _______, _______, _______, _______, _______,     _______,      KC_0,  KC_DOT,  KC_COMM, _______, _______
   ),
 
   [_RAISE] = LAYOUT_ortho_4x12_bocaj(
     KC_TILD, _________________RAISE_L1__________________, _________________RAISE_R1__________________, KC_EQUAL,
     KC_F11,  _________________RAISE_L2__________________, _________________RAISE_R2__________________, KC_F12,
     _______, _________________RAISE_L3__________________, _________________RAISE_R3__________________, _______,
-    _______, _______, _______, _______, KC_DEL,      _______,      _______, _______, _______, _______, _______
+    _______, _______, _______, _______, _______,     _______,      _______, _______, _______, _______, _______
   ),
 
   [_ADJUST] = WRAPPER_ortho_4x12(
@@ -74,13 +91,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     VRSN,    _________________ADJUST_L2_________________, _________________ADJUST_R2_________________, EEP_RST,
     TH_LVL,  _________________ADJUST_L3_________________, _________________ADJUST_R3_________________, RGB_IDL,
     HPT_TOG, _______, _______, _______, _______,     _______,      _______, _______, _______, _______, _______
-  ),
-
-  [_MOD] = WRAPPER_ortho_4x12(
-    _______, _______, _______, KC_WH_D, _______, _______,  _______, KC_7, KC_8,   KC_9,    KC_BSLS, KC_EQUAL,
-    _______, _______, KC_WH_L, KC_WH_U, KC_WH_R, _______,  _______, KC_4, KC_5,   KC_6,    KC_ASTR, _______,
-    _______, _______, _______, _______, _______, _______,  _______, KC_1, KC_2,   KC_3,    KC_PLUS, _______,
-    _______, _______, _______, _______,  KC_TAB,     KC_ENTER,      KC_0, KC_DOT, KC_COMM, KC_MINS, _______
   )
 
 };
